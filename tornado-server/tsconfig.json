@@ -7,5 +7,10 @@
     "target": "ES2015",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
     "module": "commonjs"
-  }
+  },
+  "references": [
+    {
+      "path": "../tornado-common"
+    }
+  ]
 }

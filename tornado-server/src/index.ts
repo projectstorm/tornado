@@ -10,4 +10,7 @@ const system = new System();
 app.use('/', express.static(path.join(__dirname, '../../tornado-frontend/dist-web')));
 setupAuthRoutes(app, system);
 
-app.listen(8080);
+(async () => {
+  await system.init();
+  app.listen(8080);
+})();

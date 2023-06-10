@@ -4,10 +4,11 @@
   "scripts": {
     "build": "tsc -b && pnpm run -r build",
     "build:prod": "NODE_ENV=production pnpm build",
-    "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch'",
+    "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch' 'pnpm services:dev'",
     "watch:ts": "tsc -b --watch",
     "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\""
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
+    "services:dev": "docker-compose up"
   },
   "devDependencies": {
     "typescript": "^5.1.3",

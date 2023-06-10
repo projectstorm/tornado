@@ -1,13 +1,16 @@
 export enum EnvVars {
   SITE_URL = 'SITE_URL',
-  PORT = 'PORT'
+  PORT = 'PORT',
+  DATABASE_URL = 'DATABASE_URL',
+  ADMIN_USER_EMAIL = 'ADMIN_USER_EMAIL',
+  ADMIN_USER_PASS = 'ADMIN_USER_PASSWORD'
 }
 
 export const EnvDefaults = {
   [EnvVars.PORT]: 8080
 };
 
-export const Env = Object.keys(EnvVars).reduce((prev, cur) => {
+export const ENV = Object.keys(EnvVars).reduce((prev, cur) => {
   const val = process.env[cur] ?? EnvDefaults[cur];
   if (val == null) {
     throw new Error(`Missing ENV [${cur}]`);
