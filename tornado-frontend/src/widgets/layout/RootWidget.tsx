@@ -5,19 +5,25 @@ import { ThemeDark } from '../../theme/theme-dark';
 import { HeaderWidget } from './HeaderWidget';
 import { FooterWidget } from './FooterWidget';
 import { BodyWidget } from './BodyWidget';
+import { HashRouter } from 'react-router-dom';
+import { System } from '../../System';
 
-export interface RootWidgetProps {}
+export interface RootWidgetProps {
+  system: System;
+}
 
 export const RootWidget: React.FC<RootWidgetProps> = (props) => {
   return (
     <>
       <Global styles={S.Global} />
       <ThemeProvider theme={ThemeDark}>
-        <S.Container>
-          <HeaderWidget />
-          <S.Body />
-          <FooterWidget />
-        </S.Container>
+        <HashRouter>
+          <S.Container>
+            <HeaderWidget />
+            <S.Body />
+            <FooterWidget />
+          </S.Container>
+        </HashRouter>
       </ThemeProvider>
     </>
   );
@@ -39,6 +45,7 @@ namespace S {
       margin: 0;
       padding: 0;
     }
+
     html,
     body,
     #application {
