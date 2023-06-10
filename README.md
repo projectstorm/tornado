@@ -1,3 +1,3 @@
 # Tornado
 
-Idea board
+Concept board software for ambitious creatives
