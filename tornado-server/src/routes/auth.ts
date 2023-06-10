@@ -13,8 +13,13 @@ export const setupAuthRoutes = (app: Application, system: System) => {
           email: username
         }
       });
-      if (!user) {
+
+      const failed = () => {
         done('Authentication failed');
+      }
+
+      if (!user) {
+        return failed();
       }
 
       const hashed = await new Promise<string>(async (resolve, reject) => {
@@ -26,8 +31,9 @@ export const setupAuthRoutes = (app: Application, system: System) => {
         });
       });
       if (hashed === user.password) {
-        done(null, user);
+        return done(null, user);
       }
+      return failed();
     })
   );
 
