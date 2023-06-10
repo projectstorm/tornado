@@ -1,0 +1,17 @@
+{
+  "name": "@projectstorm/tornado",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b && pnpm run -r build",
+    "build:prod": "NODE_ENV=production pnpm build",
+    "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch'",
+    "watch:ts": "tsc -b --watch",
+    "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\""
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3",
+    "prettier": "2.8.8",
+    "concurrently": "^8.2.0"
+  }
+}
