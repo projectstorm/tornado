@@ -18,9 +18,6 @@ export interface SetupHtmlRoutesOptions {
 export const createHtmlInjectorMiddleware = async (options: SetupHtmlRoutesOptions) => {
   const data = await readFileCached(options.indexFilePath);
   return async (req: Request, res: Response, next) => {
-    if (['/', '/index.html'].indexOf(req.path) === -1) {
-      return next();
-    }
     const loaded = cheerio.load(data);
     await options.patch(req, loaded);
     res.setHeader('Content-Type', 'text/html');
@@ -30,6 +27,12 @@ export const createHtmlInjectorMiddleware = async (options: SetupHtmlRoutesOptio
 };
 
 export const setupStaticMiddleware = async (app: Application, staticPath: string) => {
+  app.use(
+    '/',
+    express.static(staticPath, {
+      index: false
+    })
+  );
   app.use(
     '/',
     await createHtmlInjectorMiddleware({
@@ -43,12 +46,5 @@ export const setupStaticMiddleware = async (app: Application, staticPath: string
         }
       }
     })
-  );
-  app.use(
-    '/',
-    (req, res, next) => {
-      next();
-    },
-    express.static(staticPath)
   );
 };

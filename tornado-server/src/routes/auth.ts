@@ -2,7 +2,7 @@ import { Router } from 'express';
 import * as passport from 'passport';
 import { Strategy } from 'passport-local';
 import { System } from '../System';
-import { Routes, User } from '@projectstorm/tornado-common';
+import { LoginResponse, Routes, User } from '@projectstorm/tornado-common';
 import * as session from 'cookie-session';
 import * as cookieParser from 'cookie-parser';
 
@@ -52,6 +52,8 @@ export const setupAuthRoutes = (router: Router, system: System) => {
   router.use(passport.session());
 
   router.post(Routes.LOGIN, passport.authenticate('local'), (req, res) => {
-    res.json(req.user);
+    res.json({
+      user: req.user
+    } as LoginResponse);
   });
 };

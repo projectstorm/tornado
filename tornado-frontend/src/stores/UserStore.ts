@@ -1,6 +1,7 @@
 import { User } from '@projectstorm/tornado-common';
 import { makeObservable, observable } from 'mobx';
 import { TornadoClient } from '../client/TornadoClient';
+import { ENV } from '../Env';
 
 export interface UserStoreOptions {
   client: TornadoClient;
@@ -11,7 +12,7 @@ export class UserStore {
   authenticatedUser: User;
 
   constructor(protected options: UserStoreOptions) {
-    this.authenticatedUser = null;
+    this.authenticatedUser = ENV.user || null;
     makeObservable(this);
   }
 
@@ -25,5 +26,11 @@ export class UserStore {
       return true;
     } catch (ex) {}
     return false;
+  }
+
+  init() {
+    if (ENV.user) {
+      this.authenticatedUser = ENV.user;
+    }
   }
 }

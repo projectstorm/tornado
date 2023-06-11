@@ -18,9 +18,10 @@ const system = new System();
   await system.init();
 
   // create the routes
-  await setupStaticMiddleware(app, path.join(__dirname, '../../tornado-frontend/dist-web'));
 
   setupAuthRoutes(router, system);
+
+  await setupStaticMiddleware(app, path.join(__dirname, '../../tornado-frontend/dist-web'));
 
   system.logger.info('Starting app!');
   // start app

@@ -13,6 +13,4 @@ export class System {
       client: this.client
     });
   }
-
-  init() {}
 }

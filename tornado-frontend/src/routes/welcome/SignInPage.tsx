@@ -5,10 +5,12 @@ import { Formik, useFormik } from 'formik';
 import { FormikFieldWidget } from '../../widgets/forms/FormikFieldWidget';
 import { ButtonType, ButtonWidget } from '../../widgets/forms/ButtonWidget';
 import { useSystem } from '../../hooks/useSystem';
+import { useUnAuthenticated } from '../../hooks/useAuthenticated';
 
 export interface SignInPageProps {}
 
 export const SignInPage: React.FC<SignInPageProps> = (props) => {
+  useUnAuthenticated();
   const system = useSystem();
   return (
     <S.Container>

@@ -5,9 +5,10 @@ import { ThemeDark } from '../../theme/theme-dark';
 import { HeaderWidget } from './HeaderWidget';
 import { FooterWidget } from './FooterWidget';
 import { BodyWidget } from './BodyWidget';
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { System } from '../../System';
 import { SystemContext } from '../../hooks/useSystem';
+import { useForceUpdate } from '../../hooks/useForceUpdate';
 
 export interface RootWidgetProps {
   system: System;
@@ -18,7 +19,7 @@ export const RootWidget: React.FC<RootWidgetProps> = (props) => {
     <>
       <Global styles={S.Global} />
       <ThemeProvider theme={ThemeDark}>
-        <HashRouter>
+        <BrowserRouter>
           <SystemContext.Provider value={props.system}>
             <S.Container>
               <HeaderWidget />
@@ -26,7 +27,7 @@ export const RootWidget: React.FC<RootWidgetProps> = (props) => {
               <FooterWidget />
             </S.Container>
           </SystemContext.Provider>
-        </HashRouter>
+        </BrowserRouter>
       </ThemeProvider>
     </>
   );
