@@ -24,7 +24,7 @@ Tornado is configured using environment variables.
 
 | name             | default | desc                                                                                           |
 |------------------|---------|------------------------------------------------------------------------------------------------|
-| SITE_URL         |         | example: https://tornado.com                                                                   |
+| SITE_URL         |         | example: https://tornado.example.com                                                           |
 | PORT             | 8080    | Port to start the server on                                                                    |
 | DATABASE_URL     |         | mysql://{user}:{pass}@{host}:{port}/{db}                                                       |
 | ADMIN_USER_EMAIL |         | Email address of the admin user (for login)                                                    |
