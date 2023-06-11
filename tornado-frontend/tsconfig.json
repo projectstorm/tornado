@@ -6,6 +6,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo",
+    "experimentalDecorators": true,
     "lib": [
       "ESNext",
       "DOM"

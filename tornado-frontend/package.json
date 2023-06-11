@@ -16,6 +16,7 @@
     "@emotion/react": "^11.11.1",
     "react-router-dom": "^6.12.1",
     "mobx": "^6.9.0",
+    "formik": "^2.4.1",
     "mobx-react": "^7.6.0"
   },
   "devDependencies": {

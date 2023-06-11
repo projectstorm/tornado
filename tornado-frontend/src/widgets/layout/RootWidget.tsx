@@ -7,6 +7,7 @@ import { FooterWidget } from './FooterWidget';
 import { BodyWidget } from './BodyWidget';
 import { HashRouter } from 'react-router-dom';
 import { System } from '../../System';
+import { SystemContext } from '../../hooks/useSystem';
 
 export interface RootWidgetProps {
   system: System;
@@ -18,11 +19,13 @@ export const RootWidget: React.FC<RootWidgetProps> = (props) => {
       <Global styles={S.Global} />
       <ThemeProvider theme={ThemeDark}>
         <HashRouter>
-          <S.Container>
-            <HeaderWidget />
-            <S.Body />
-            <FooterWidget />
-          </S.Container>
+          <SystemContext.Provider value={props.system}>
+            <S.Container>
+              <HeaderWidget />
+              <S.Body />
+              <FooterWidget />
+            </S.Container>
+          </SystemContext.Provider>
         </HashRouter>
       </ThemeProvider>
     </>

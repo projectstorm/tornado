@@ -13,8 +13,10 @@ export interface TornadoTheme {
   layout: {
     background: string;
     separatorLine: string;
+    centerPanel: string;
   };
   controls: {
+    error: string;
     button: {
       [key in ButtonType]: BtnTheme;
     };
