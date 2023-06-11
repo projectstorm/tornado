@@ -2,6 +2,10 @@ import { PrismaClient } from '@prisma/client';
 import { ENV } from './Env';
 import { UserApi } from './api/UserApi';
 import { Logger } from '@projectstorm/tornado-common';
+import { exec } from 'node:child_process';
+import { promisify } from 'util';
+import * as path from 'path';
+const execAsync = promisify(exec);
 
 export class System {
   db: PrismaClient;
@@ -41,6 +45,19 @@ export class System {
         await this.sleep(2000);
       }
     } while (true);
+
+    // attempt to apply migrations
+    this.logger.info('Applying database migrations');
+    const cmd = `${path.join(__dirname, '../node_modules/.bin/prisma')} db push`;
+    this.logger.debug(cmd);
+    await execAsync(cmd, {
+      env: {
+        ...process.env,
+        DATABASE_URL: ENV.DATABASE_URL
+      }
+    });
+
+    this.logger.info('Checking for admin user');
 
     // check for root user
     const users = await this.db.user.count();
