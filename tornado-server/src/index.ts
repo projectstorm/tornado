@@ -1,26 +1,28 @@
 import * as express from 'express';
+
 const app = express();
 import * as path from 'path';
 import { setupAuthRoutes } from './routes/auth';
 import { System } from './System';
+import { application } from 'express';
+import { setupStaticMiddleware } from './routes/html';
 
 const system = new System();
 
 (async () => {
-  await system.init();
-
-  var router = express.Router();
+  const router = express.Router();
   app.use(express.json());
   app.use('/', router);
-  app.use(
-    '/',
-    (req, res, next) => {
-      console.log(req.user);
-      next();
-    },
-    express.static(path.join(__dirname, '../../tornado-frontend/dist-web'))
-  );
+
+  // wait for system to boot
+  await system.init();
+
+  // create the routes
+  await setupStaticMiddleware(app, path.join(__dirname, '../../tornado-frontend/dist-web'));
+
   setupAuthRoutes(router, system);
 
+  system.logger.info('Starting app!');
+  // start app
   app.listen(8080);
 })();
