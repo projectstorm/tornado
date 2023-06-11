@@ -3,11 +3,13 @@ export enum EnvVars {
   PORT = 'PORT',
   DATABASE_URL = 'DATABASE_URL',
   ADMIN_USER_EMAIL = 'ADMIN_USER_EMAIL',
-  ADMIN_USER_PASS = 'ADMIN_USER_PASSWORD'
+  ADMIN_USER_PASS = 'ADMIN_USER_PASSWORD',
+  ADMIN_USER_NAME = 'ADMIN_USER_NAME'
 }
 
 export const EnvDefaults = {
-  [EnvVars.PORT]: 8080
+  [EnvVars.PORT]: 8080,
+  [EnvVars.ADMIN_USER_NAME]: 'Admin User'
 };
 
 export const ENV = Object.keys(EnvVars).reduce((prev, cur) => {

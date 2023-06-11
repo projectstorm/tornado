@@ -35,14 +35,19 @@ export class TornadoClient {
     if (!res.ok) {
       throw new TornadoClientError(res);
     }
-    return res.json();
+    if (res.headers.get('Content-Type')?.includes('application/json')) {
+      return res.json();
+    }
+    return null;
   }
 
   createRoute<Req, Res>(route: Routes) {
-    return (req: Req) => {
+    return (req?: Req) => {
       return this.post(route, req) as Promise<Res>;
     };
   }
 
   login = this.createRoute<LoginRequest, LoginResponse>(Routes.LOGIN);
+
+  signOut = this.createRoute(Routes.SIGN_OUT);
 }

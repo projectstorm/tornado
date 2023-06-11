@@ -2,7 +2,7 @@ import * as React from 'react';
 import { css, Global, ThemeProvider } from '@emotion/react';
 import { styled } from '../../theme/theme';
 import { ThemeDark } from '../../theme/theme-dark';
-import { HeaderWidget } from './HeaderWidget';
+import { HeaderWidget } from '../header/HeaderWidget';
 import { FooterWidget } from './FooterWidget';
 import { BodyWidget } from './BodyWidget';
 import { BrowserRouter } from 'react-router-dom';

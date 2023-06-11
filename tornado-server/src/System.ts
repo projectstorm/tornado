@@ -68,8 +68,9 @@ export class System {
       try {
         await this.db.user.create({
           data: {
-            salt: salt,
             email: ENV.ADMIN_USER_EMAIL,
+            name: ENV.ADMIN_USER_NAME,
+            salt: salt,
             password: password
           }
         });

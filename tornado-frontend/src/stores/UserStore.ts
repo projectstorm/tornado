@@ -28,6 +28,11 @@ export class UserStore {
     return false;
   }
 
+  async signOut() {
+    await this.options.client.signOut();
+    this.authenticatedUser = null;
+  }
+
   init() {
     if (ENV.user) {
       this.authenticatedUser = ENV.user;

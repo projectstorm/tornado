@@ -10,5 +10,6 @@ export interface LoginResponse {
 }
 
 export enum Routes {
-  LOGIN = '/login'
+  LOGIN = '/login',
+  SIGN_OUT = '/signout'
 }

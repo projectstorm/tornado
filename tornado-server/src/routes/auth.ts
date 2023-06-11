@@ -56,4 +56,10 @@ export const setupAuthRoutes = (router: Router, system: System) => {
       user: req.user
     } as LoginResponse);
   });
+
+  router.post(Routes.SIGN_OUT, (req, res, next) => {
+    req.session = null;
+    res.status(200);
+    res.end();
+  });
 };
