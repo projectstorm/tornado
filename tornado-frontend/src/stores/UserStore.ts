@@ -15,13 +15,15 @@ export class UserStore {
     makeObservable(this);
   }
 
-  async signIn(username: string, password: string) {
+  async signIn(username: string, password: string): Promise<boolean> {
     try {
       const res = await this.options.client.login({
         username,
         password
       });
       this.authenticatedUser = res.user;
+      return true;
     } catch (ex) {}
+    return false;
   }
 }

@@ -7,6 +7,10 @@ export const ThemeDark: TornadoTheme = {
     separatorLine: '#2d2d2f',
     centerPanel: '#121215'
   },
+  text: {
+    heading: '#fff',
+    description: '#5f5f60'
+  },
   controls: {
     error: '#ab3838',
     field: {

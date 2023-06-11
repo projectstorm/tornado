@@ -15,6 +15,10 @@ export interface TornadoTheme {
     separatorLine: string;
     centerPanel: string;
   };
+  text: {
+    heading: string;
+    description: string;
+  };
   controls: {
     error: string;
     button: {

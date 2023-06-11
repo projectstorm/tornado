@@ -3,24 +3,24 @@ const app = express();
 import * as path from 'path';
 import { setupAuthRoutes } from './routes/auth';
 import { System } from './System';
-import * as session from 'express-session';
 
 const system = new System();
 
-app.use(
-  session({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
-  })
-);
-
-app.use('/', express.static(path.join(__dirname, '../../tornado-frontend/dist-web')));
-
-setupAuthRoutes(app, system);
-
 (async () => {
   await system.init();
+
+  var router = express.Router();
+  app.use(express.json());
+  app.use('/', router);
+  app.use(
+    '/',
+    (req, res, next) => {
+      console.log(req.user);
+      next();
+    },
+    express.static(path.join(__dirname, '../../tornado-frontend/dist-web'))
+  );
+  setupAuthRoutes(router, system);
+
   app.listen(8080);
 })();

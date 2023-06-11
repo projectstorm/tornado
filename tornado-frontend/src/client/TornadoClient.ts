@@ -13,14 +13,24 @@ export class TornadoClientError extends Error {
 export class TornadoClient {
   constructor(protected options: TornadoClientOptions) {}
 
-  async post(route: Routes, req) {
+  async post(route: Routes, req: any) {
+    let body = req || null;
+    let headers = {};
+    if (req instanceof FormData) {
+      body = req;
+    } else if (req) {
+      body = JSON.stringify(req);
+      headers = {
+        ...headers,
+        'Content-Type': 'application/json'
+      };
+    }
+
     const res = await fetch(`${this.options.baseURL}${route}`, {
       method: 'POST',
-      body: JSON.stringify(req),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept-Type': 'application/json'
-      }
+      body: body,
+      credentials: 'same-origin',
+      headers: headers
     });
     if (!res.ok) {
       throw new TornadoClientError(res);

@@ -11,7 +11,8 @@ export interface FieldWidgetProps {
 
 export const FieldWidget: React.FC<FieldWidgetProps> = (props) => {
   return (
-    <S.Container
+    <S.Input
+      placeholder={props.placeholder}
       type={props.type}
       value={props.value?.trim() || ''}
       onChange={(event) => {
@@ -25,10 +26,17 @@ export const FieldWidget: React.FC<FieldWidgetProps> = (props) => {
   );
 };
 namespace S {
-  export const Container = styled.input`
+  export const Input = styled.input`
     border: none;
-    padding: 5px 10px;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 20px;
     color: ${(p) => p.theme.controls.field.color};
     background: ${(p) => p.theme.controls.field.background};
+    outline: none;
+
+    &::placeholder {
+      color: ${(p) => p.theme.controls.field.placeholder};
+    }
   `;
 }

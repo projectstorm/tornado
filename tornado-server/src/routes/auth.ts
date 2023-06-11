@@ -1,10 +1,12 @@
-import { Application } from 'express';
+import { Router } from 'express';
 import * as passport from 'passport';
 import { Strategy } from 'passport-local';
 import { System } from '../System';
-import { User } from '@projectstorm/tornado-common';
+import { Routes, User } from '@projectstorm/tornado-common';
+import * as session from 'cookie-session';
+import * as cookieParser from 'cookie-parser';
 
-export const setupAuthRoutes = (app: Application, system: System) => {
+export const setupAuthRoutes = (router: Router, system: System) => {
   passport.use(
     new Strategy(async (username, password, done) => {
       try {
@@ -19,15 +21,16 @@ export const setupAuthRoutes = (app: Application, system: System) => {
       } catch (ex) {
         system.logger.error(`Something went wrong authenticating user ${username}`, ex);
       }
-      done('Authentication failed');
+      system.logger.info(`Authentication failed`);
+      done(null, false, {
+        message: `Authentication failed`
+      });
     })
   );
 
   passport.serializeUser((user, cb) => {
     process.nextTick(function () {
-      return cb(null, {
-        id: user.id
-      });
+      return cb(null, user);
     });
   });
 
@@ -37,7 +40,18 @@ export const setupAuthRoutes = (app: Application, system: System) => {
     });
   });
 
-  app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res) {
-    res.redirect('/');
+  router.use(cookieParser());
+  router.use(
+    session({
+      name: 'session',
+      keys: ['im a fox'],
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    })
+  );
+  router.use(passport.initialize());
+  router.use(passport.session());
+
+  router.post(Routes.LOGIN, passport.authenticate('local'), (req, res) => {
+    res.json(req.user);
   });
 };

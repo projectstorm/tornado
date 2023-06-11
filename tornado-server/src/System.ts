@@ -61,5 +61,7 @@ export class System {
         this.logger.error(`Failed to create admin user`, ex);
       }
     }
+
+    this.logger.info('System startup complete!');
   }
 }

@@ -41,7 +41,8 @@ export class UserApi extends AbstractApi {
       return false;
     }
     const password2 = await this.hashPassword(password, user.salt);
-    if (user.password.toString() === password2.toString(`hex`)) {
+
+    if (user.password.toString() === password2.toString()) {
       return user;
     }
     return false;

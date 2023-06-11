@@ -18,16 +18,21 @@ export const SignInPage: React.FC<SignInPageProps> = (props) => {
             email: '',
             password: ''
           }}
-          onSubmit={async (values) => {
-            await system.userStore.signIn(values.email, values.password);
+          onSubmit={async (values, formikHelpers) => {
+            const success = await system.userStore.signIn(values.email, values.password);
+            if (!success) {
+              formikHelpers.setErrors({
+                password: 'Authentication failed'
+              });
+            }
           }}
         >
           {({ submitForm }) => {
             return (
               <>
-                <FormikFieldWidget label="Email" name="email" />
-                <FormikFieldWidget label="Password" name="password" type="password" />
-                <ButtonWidget type={ButtonType.PRIMARY} action={submitForm} />
+                <S.Field label="Email" name="email" />
+                <S.Field label="Password" name="password" type="password" />
+                <ButtonWidget type={ButtonType.PRIMARY} label="Sign in" action={submitForm} />
               </>
             );
           }}
@@ -37,6 +42,10 @@ export const SignInPage: React.FC<SignInPageProps> = (props) => {
   );
 };
 namespace S {
+  export const Field = styled(FormikFieldWidget)`
+    padding-bottom: 10px;
+  `;
+
   export const Container = styled.div`
     display: flex;
     align-items: center;

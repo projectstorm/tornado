@@ -20,7 +20,7 @@ namespace S {
 
   export const Error = styled.div`
     padding-top: 5px;
-    font-size: 5px;
+    font-size: 15px;
     color: ${(p) => p.theme.controls.error};
     ${FONT}
   `;
