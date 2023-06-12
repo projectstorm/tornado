@@ -1,3 +1,4 @@
+import './publicPath';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RootWidget } from './widgets/layout/RootWidget';

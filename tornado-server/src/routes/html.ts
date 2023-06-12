@@ -26,23 +26,36 @@ export const createHtmlInjectorMiddleware = async (options: SetupHtmlRoutesOptio
   };
 };
 
-export const setupStaticMiddleware = async (app: Application, staticPath: string) => {
-  app.use(
+export interface SetupStaticMiddlewareOptions {
+  app: Application;
+  staticPath: string;
+  siteUrl: string;
+}
+
+export const setupStaticMiddleware = async (options: SetupStaticMiddlewareOptions) => {
+  options.app.use(
     '/',
-    express.static(staticPath, {
+    express.static(options.staticPath, {
       index: false
     })
   );
-  app.use(
+  options.app.use(
     '/',
     await createHtmlInjectorMiddleware({
-      indexFilePath: path.join(staticPath, 'index.html'),
+      indexFilePath: path.join(options.staticPath, 'index.html'),
       patch: async (req, $) => {
+        // patch script to site url
+        $('script').each((i, e) => {
+          const script = $(e);
+          script.attr('src', `${options.siteUrl}/${script.attr('src')}`);
+        });
+
         if (req.user) {
           const script = `window.env=${JSON.stringify({
-            user: req.user
+            user: req.user,
+            site_url: options.siteUrl
           })}`;
-          $('head').append(`<script>${script}</script>`);
+          $('head').prepend(`<script>${script}</script>`);
         }
       }
     })

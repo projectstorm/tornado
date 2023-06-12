@@ -5,12 +5,15 @@ import { Logger } from '@projectstorm/tornado-common';
 import { exec } from 'node:child_process';
 import { promisify } from 'util';
 import * as path from 'path';
+import { ConceptApi } from './api/ConceptApi';
 const execAsync = promisify(exec);
 
 export class System {
   db: PrismaClient;
 
   users: UserApi;
+  concepts: ConceptApi;
+
   logger: Logger;
 
   constructor() {
@@ -25,6 +28,7 @@ export class System {
       name: 'SYSTEM'
     });
     this.users = new UserApi(this);
+    this.concepts = new ConceptApi(this);
   }
 
   sleep(ms: number) {

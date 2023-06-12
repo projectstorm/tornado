@@ -5,6 +5,7 @@ import { FONT } from '../../fonts';
 export interface TableRow {
   key: string;
   cells: { [key: string]: any };
+  action?: () => any;
 }
 
 export interface TableColumn<T extends TableRow> {
@@ -32,15 +33,20 @@ export const TableWidget = <T extends TableRow>(props: TableWidgetProps<T>) => {
       <tbody>
         {props.rows.map((r) => {
           return (
-            <tr key={r.key}>
+            <S.TR
+              key={r.key}
+              onClick={() => {
+                r.action?.();
+              }}
+            >
               {props.columns.map((c) => {
-                let value = r[c.key];
+                let value = r.cells[c.key];
                 if (c.render) {
-                  value = c.render(c, r);
+                  value = c.render(value, r);
                 }
                 return <S.TD key={c.key}>{value}</S.TD>;
               })}
-            </tr>
+            </S.TR>
           );
         })}
       </tbody>
@@ -52,6 +58,20 @@ namespace S {
     border: 0;
     border-spacing: 0;
     width: 100%;
+  `;
+
+  export const TR = styled.tr`
+    cursor: pointer;
+
+    td {
+      background: ${(p) => p.theme.table.row.background};
+    }
+
+    &:hover {
+      td {
+        background: ${(p) => p.theme.table.row.backgroundHover};
+      }
+    }
   `;
 
   export const TH = styled.th`

@@ -11,6 +11,12 @@ export const ThemeDark: TornadoTheme = {
     heading: '#fff',
     description: '#5f5f60'
   },
+  table: {
+    row: {
+      background: 'transparent',
+      backgroundHover: '#212123'
+    }
+  },
   controls: {
     error: '#ab3838',
     field: {

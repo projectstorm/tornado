@@ -4,6 +4,7 @@ import { setupAuthRoutes } from './routes/auth';
 import { System } from './System';
 import { setupStaticMiddleware } from './routes/html';
 import { ENV } from './Env';
+import { setupConceptRoutes } from './routes/concepts';
 
 // singletons
 const app = express();
@@ -20,9 +21,14 @@ const system = new System();
 
   // serve authentication
   setupAuthRoutes(router, system);
+  setupConceptRoutes(router, system);
 
   // serve index and assets
-  await setupStaticMiddleware(app, path.join(__dirname, '../../tornado-frontend/dist-web'));
+  await setupStaticMiddleware({
+    app,
+    siteUrl: ENV.SITE_URL,
+    staticPath: path.join(__dirname, '../../tornado-frontend/dist-web')
+  });
 
   // start app
   system.logger.info(`Starting app on port: ${ENV.PORT}`);

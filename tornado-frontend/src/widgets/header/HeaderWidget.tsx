@@ -21,6 +21,8 @@ namespace S {
     justify-content: space-between;
     padding: 10px;
     border-bottom: solid 1px ${(p) => p.theme.layout.separatorLine};
+    padding-left: 50px;
+    padding-right: 50px;
   `;
 
   export const Logo = styled.img`

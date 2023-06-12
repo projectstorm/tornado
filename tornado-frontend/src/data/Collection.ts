@@ -1,4 +1,4 @@
-import { action, observable } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 import * as _ from 'lodash';
 
 export interface CollectionOptions<Decoded, Encoded> {
@@ -12,6 +12,7 @@ export class Collection<Decoded extends { id: number }, Encoded extends { id: nu
 
   constructor(protected options: CollectionOptions<Decoded, Encoded>) {
     this.data = new Map();
+    makeObservable(this);
   }
 
   @action

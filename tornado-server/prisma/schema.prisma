@@ -13,5 +13,14 @@ model User {
   email     String   @unique
   name      String?
   password  Bytes
-  salt      String
+  salt          String
+  conceptBoards ConceptBoard[]
+}
+
+model ConceptBoard {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  name      String
+  user      User @relation(fields: [userId], references: [id])
+  userId    Int
 }
