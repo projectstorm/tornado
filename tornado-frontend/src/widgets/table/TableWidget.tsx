@@ -23,9 +23,11 @@ export const TableWidget = <T extends TableRow>(props: TableWidgetProps<T>) => {
   return (
     <S.Table className={props.className}>
       <thead>
-        {props.columns.map((c) => {
-          return <S.TH key={c.key}>{c.label}</S.TH>;
-        })}
+        <tr>
+          {props.columns.map((c) => {
+            return <S.TH key={c.key}>{c.label}</S.TH>;
+          })}
+        </tr>
       </thead>
       <tbody>
         {props.rows.map((r) => {

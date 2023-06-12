@@ -53,6 +53,9 @@ importers:
       formik:
         specifier: ^2.4.1
         version: 2.4.1(react@18.2.0)
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       mobx:
         specifier: ^6.9.0
         version: 6.9.0
@@ -72,6 +75,9 @@ importers:
         specifier: ^6.12.1
         version: 6.12.1(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.14.195
+        version: 4.14.195
       '@types/node':
         specifier: ^20.2.6
         version: 20.2.6

@@ -1,4 +1,12 @@
-import { LoginRequest, LoginResponse, Routes } from '@projectstorm/tornado-common';
+import {
+  ConceptsRequest,
+  ConceptsResponse,
+  CreateConceptRequest,
+  CreateConceptResponse,
+  LoginRequest,
+  LoginResponse,
+  Routes
+} from '@projectstorm/tornado-common';
 
 export interface TornadoClientOptions {
   baseURL: string;
@@ -35,9 +43,14 @@ export class TornadoClient {
     if (!res.ok) {
       throw new TornadoClientError(res);
     }
-    if (res.headers.get('Content-Type')?.includes('application/json')) {
+    const responseType = res.headers.get('Content-Type');
+    if (responseType?.includes('application/json')) {
       return res.json();
     }
+    if (responseType?.includes('text/html')) {
+      throw new TornadoClientError(res);
+    }
+
     return null;
   }
 
@@ -50,4 +63,8 @@ export class TornadoClient {
   login = this.createRoute<LoginRequest, LoginResponse>(Routes.LOGIN);
 
   signOut = this.createRoute(Routes.SIGN_OUT);
+
+  concepts = this.createRoute<ConceptsRequest, ConceptsResponse>(Routes.CONCEPTS);
+
+  createConcept = this.createRoute<CreateConceptRequest, CreateConceptResponse>(Routes.CONCEPT_CREATE);
 }

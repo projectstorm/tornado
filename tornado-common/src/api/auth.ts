@@ -8,8 +8,3 @@ export interface LoginRequest {
 export interface LoginResponse {
   user: User;
 }
-
-export enum Routes {
-  LOGIN = '/login',
-  SIGN_OUT = '/signout'
-}
