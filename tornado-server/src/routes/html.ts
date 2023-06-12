@@ -50,13 +50,11 @@ export const setupStaticMiddleware = async (options: SetupStaticMiddlewareOption
           script.attr('src', `${options.siteUrl}/${script.attr('src')}`);
         });
 
-        if (req.user) {
-          const script = `window.env=${JSON.stringify({
-            user: req.user,
-            site_url: options.siteUrl
-          })}`;
-          $('head').prepend(`<script>${script}</script>`);
-        }
+        const script = `window.env=${JSON.stringify({
+          user: req.user || null,
+          site_url: options.siteUrl
+        })}`;
+        $('head').prepend(`<script>${script}</script>`);
       }
     })
   );
