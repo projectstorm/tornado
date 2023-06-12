@@ -2,11 +2,10 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { useAuthenticated } from '../../hooks/useAuthenticated';
 
-export interface DashboardPageProps {}
+export interface ConceptBoardPageProps {}
 
-export const DashboardPage: React.FC<DashboardPageProps> = (props) => {
+export const ConceptBoardPage: React.FC<ConceptBoardPageProps> = (props) => {
   useAuthenticated();
-
   return <S.Container></S.Container>;
 };
 namespace S {

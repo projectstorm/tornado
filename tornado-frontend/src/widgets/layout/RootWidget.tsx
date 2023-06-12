@@ -8,7 +8,6 @@ import { BodyWidget } from './BodyWidget';
 import { BrowserRouter } from 'react-router-dom';
 import { System } from '../../System';
 import { SystemContext } from '../../hooks/useSystem';
-import { useForceUpdate } from '../../hooks/useForceUpdate';
 
 export interface RootWidgetProps {
   system: System;

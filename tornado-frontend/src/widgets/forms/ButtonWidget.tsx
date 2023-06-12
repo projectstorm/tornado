@@ -35,11 +35,11 @@ export const ButtonWidget: React.FC<ButtonWidgetProps> = (props) => {
 namespace S {
   export const Container = styled.div<{ type: ButtonType }>`
     border-radius: 6px;
-    padding: 10px;
+    display: inline-flex;
+    padding: 5px 10px;
     padding-right: 0;
     background: ${(p) => p.theme.controls.button[p.type].background};
     color: ${(p) => p.theme.controls.button[p.type].color};
-    ${FONT};
     cursor: pointer;
 
     &:hover {
@@ -50,6 +50,8 @@ namespace S {
 
   export const Label = styled.div`
     padding-right: 10px;
+    font-size: 13px;
+    ${FONT};
   `;
 
   export const IconContainer = styled.div`
