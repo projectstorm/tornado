@@ -3,16 +3,26 @@ export interface ConceptBoard {
   name: string;
 }
 
-export interface ConceptsRequest {
-  user_id: number;
-}
+// !----- list ----
+
+export interface ConceptsRequest {}
 
 export interface ConceptsResponse {
   concepts: ConceptBoard[];
 }
+
+// !----- create ----
 
 export type CreateConceptRequest = Pick<ConceptBoard, 'name'>;
 
 export interface CreateConceptResponse {
   concept: ConceptBoard;
 }
+
+// !----- delete ----
+
+export interface DeleteConceptsRequest {
+  board_id: number;
+}
+
+export interface DeleteConceptsResponse {}

@@ -3,6 +3,8 @@ import {
   ConceptsResponse,
   CreateConceptRequest,
   CreateConceptResponse,
+  DeleteConceptsRequest,
+  DeleteConceptsResponse,
   LoginRequest,
   LoginResponse,
   Routes
@@ -67,4 +69,6 @@ export class TornadoClient {
   concepts = this.createRoute<ConceptsRequest, ConceptsResponse>(Routes.CONCEPTS);
 
   createConcept = this.createRoute<CreateConceptRequest, CreateConceptResponse>(Routes.CONCEPT_CREATE);
+
+  deleteConcept = this.createRoute<DeleteConceptsRequest, DeleteConceptsResponse>(Routes.CONCEPT_DELETE);
 }

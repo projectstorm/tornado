@@ -3,5 +3,6 @@ export enum Routes {
   SIGN_OUT = '/signout',
   CONCEPTS = '/concepts',
   CONCEPT_CREATE = '/concept/create',
+  CONCEPT_DELETE = '/concept/delete',
   CONCEPT = '/concept'
 }

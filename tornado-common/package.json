@@ -1,12 +1,14 @@
 {
   "name": "@projectstorm/tornado-common",
-  "dependencies": {
-    "@types/node": "^20.3.0",
-    "lodash": "^4.17.21"
-  },
   "main": "./dist/index.js",
   "types": "./dist/@types/index",
+  "dependencies": {
+    "@types/node": "^20.3.0",
+    "lodash": "^4.17.21",
+    "uuid": "^9.0.0"
+  },
   "devDependencies": {
+    "@types/uuid": "^9.0.2",
     "@types/lodash": "^4.14.195"
   }
 }

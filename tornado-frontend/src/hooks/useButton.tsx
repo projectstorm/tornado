@@ -11,6 +11,7 @@ export const useButton = (props: UseButtonOptions, ref: React.RefObject<HTMLDivE
   useEffect(() => {
     let busy = false;
     const l = (event: MouseEvent) => {
+      event.stopPropagation();
       // debounce
       if (busy || props.disabled) {
         return;

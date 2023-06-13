@@ -1,5 +1,5 @@
 import { TornadoClient } from '../client/TornadoClient';
-import { ConceptBoard } from '@projectstorm/tornado-common';
+import { BaseListener, BaseObserver, ConceptBoard } from '@projectstorm/tornado-common';
 import { Collection } from '../data/Collection';
 import { computed } from 'mobx';
 
@@ -8,11 +8,21 @@ export interface ConceptsStoreOptions {
   userID: number;
 }
 
-export class ConceptBoardModel {
-  constructor(public data: ConceptBoard) {}
+export interface ConceptBoardModelListener extends BaseListener {
+  deleted: () => Promise<void>;
+}
+
+export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
+  constructor(public data: ConceptBoard) {
+    super();
+  }
 
   get id() {
     return this.data.id;
+  }
+
+  async delete() {
+    return this.iterateListenersAsync((cb) => cb.deleted?.());
   }
 }
 
@@ -21,7 +31,18 @@ export class ConceptsStore {
 
   constructor(protected options: ConceptsStoreOptions) {
     this._concepts = new Collection({
-      create: (c) => new ConceptBoardModel(c),
+      create: (c) => {
+        const board = new ConceptBoardModel(c);
+        board.registerListener({
+          deleted: async () => {
+            await this.options.client.deleteConcept({
+              board_id: board.id
+            });
+            await this.loadConcepts();
+          }
+        });
+        return board;
+      },
       update: (c, board) => (board.data = c)
     });
   }
@@ -35,9 +56,7 @@ export class ConceptsStore {
   }
 
   async loadConcepts() {
-    const response = await this.options.client.concepts({
-      user_id: this.options.userID
-    });
+    const response = await this.options.client.concepts();
     this._concepts.setValues(response.concepts);
   }
 

@@ -1,17 +1,21 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useAuthenticated } from '../../hooks/useAuthenticated';
-import { TableWidget } from '../../widgets/table/TableWidget';
+import { TableRow, TableWidget } from '../../widgets/table/TableWidget';
 import { ButtonType, ButtonWidget } from '../../widgets/forms/ButtonWidget';
 import { useSystem } from '../../hooks/useSystem';
 import { generatePath, useNavigate } from 'react-router-dom';
 import { Routing } from '../routes';
-import { useEffect } from 'react';
 import { observer } from 'mobx-react';
+import { TableRowActionsWidget } from '../../widgets/table/TableRowActionsWidget';
+import { ConceptBoardModel } from '../../stores/ConceptsStore';
 
-export interface ConceptBoardsPageProps {}
+export interface ConceptBoardRow extends TableRow {
+  board: ConceptBoardModel;
+}
 
-export const ConceptBoardsPage: React.FC<ConceptBoardsPageProps> = observer((props) => {
+export const ConceptBoardsPage: React.FC = observer((props) => {
   useAuthenticated();
   const navigate = useNavigate();
   const system = useSystem();
@@ -31,7 +35,7 @@ export const ConceptBoardsPage: React.FC<ConceptBoardsPageProps> = observer((pro
           }}
         />
       </S.Buttons>
-      <TableWidget
+      <TableWidget<ConceptBoardRow>
         columns={[
           {
             key: 'id',
@@ -40,12 +44,30 @@ export const ConceptBoardsPage: React.FC<ConceptBoardsPageProps> = observer((pro
           {
             key: 'name',
             label: 'Board name'
+          },
+          {
+            key: 'actions',
+            label: 'Actions',
+            render: ({ rowHover, row }) => {
+              return (
+                <TableRowActionsWidget show={rowHover}>
+                  <ButtonWidget
+                    label="Delete"
+                    type={ButtonType.NORMAL}
+                    action={() => {
+                      return row.board.delete();
+                    }}
+                  />
+                </TableRowActionsWidget>
+              );
+            }
           }
         ]}
         rows={
           system.conceptStore?.concepts.map((c) => {
             return {
               key: `${c.id}`,
+              board: c,
               action: () => {
                 navigate(generatePath(Routing.CONCEPTS_BOARD, { id: `${c.id}` }));
               },

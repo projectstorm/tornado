@@ -1,4 +1,4 @@
-import { AbstractApi } from './AbstractApi';
+import { AbstractApi, ApiError } from './AbstractApi';
 import { System } from '../System';
 import { User } from '@prisma/client';
 
@@ -19,6 +19,26 @@ export class ConceptApi extends AbstractApi {
             id: user.id
           }
         }
+      }
+    });
+  }
+
+  async deleteConcept(user: User, id: number) {
+    const found = await this.system.db.conceptBoard.findFirst({
+      where: {
+        user: {
+          id: user.id
+        },
+        id: id
+      }
+    });
+    if (!found) {
+      throw new ApiError('Not allowed');
+    }
+
+    return await this.system.db.conceptBoard.delete({
+      where: {
+        id: id
       }
     });
   }

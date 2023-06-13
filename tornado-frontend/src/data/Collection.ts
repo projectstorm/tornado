@@ -21,7 +21,7 @@ export class Collection<Decoded extends { id: number }, Encoded extends { id: nu
     let keys2 = values.map((v) => v.id);
 
     // to remove
-    _.difference(keys2, keys).forEach((c) => {
+    _.difference(keys, keys2).forEach((c) => {
       this.data.delete(c);
     });
 

@@ -6,6 +6,8 @@ export interface AbstractApiOptions {
   system: System;
 }
 
+export class ApiError extends Error {}
+
 export class AbstractApi {
   logger: Logger;
 

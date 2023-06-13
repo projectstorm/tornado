@@ -35,6 +35,7 @@ export const ButtonWidget: React.FC<ButtonWidgetProps> = (props) => {
 namespace S {
   export const Container = styled.div<{ type: ButtonType }>`
     border-radius: 6px;
+    user-select: none;
     display: inline-flex;
     padding: 5px 10px;
     padding-right: 0;
