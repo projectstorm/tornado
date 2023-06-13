@@ -17,6 +17,10 @@ export const ThemeDark: TornadoTheme = {
       backgroundHover: '#212123'
     }
   },
+  editor: {
+    background: '#18181b',
+    stripes: '#202021'
+  },
   controls: {
     error: '#ab3838',
     field: {

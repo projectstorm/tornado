@@ -15,6 +15,10 @@ export interface TornadoTheme {
     separatorLine: string;
     centerPanel: string;
   };
+  editor: {
+    background: string;
+    stripes: string;
+  };
   table: {
     row: {
       background: string;
