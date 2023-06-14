@@ -6,6 +6,7 @@ import { exec } from 'node:child_process';
 import { promisify } from 'util';
 import * as path from 'path';
 import { ConceptApi } from './api/ConceptApi';
+import { MediaApi } from './api/MediaApi';
 const execAsync = promisify(exec);
 
 export class System {
@@ -13,6 +14,7 @@ export class System {
 
   users: UserApi;
   concepts: ConceptApi;
+  media: MediaApi;
 
   logger: Logger;
 
@@ -29,6 +31,7 @@ export class System {
     });
     this.users = new UserApi(this);
     this.concepts = new ConceptApi(this);
+    this.media = new MediaApi(this);
   }
 
   sleep(ms: number) {
@@ -84,6 +87,10 @@ export class System {
       }
     }
 
+    // apis
+    await this.media.init();
+
+    // complete
     this.logger.info('System startup complete!');
   }
 }

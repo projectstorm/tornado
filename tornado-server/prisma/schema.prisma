@@ -8,19 +8,28 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  name      String?
-  password  Bytes
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
+  email         String         @unique
+  name          String?
+  password      Bytes
   salt          String
   conceptBoards ConceptBoard[]
+  media         Media[]
 }
 
 model ConceptBoard {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   name      String
-  user      User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  data      Json?
+}
+
+model Media {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
   userId    Int
 }

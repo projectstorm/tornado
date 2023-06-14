@@ -4,3 +4,5 @@ dist
 dist-web
 tsconfig.tsbuildinfo
 .idea
+.tornado-store
+.env
