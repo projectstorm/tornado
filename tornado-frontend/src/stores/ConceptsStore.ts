@@ -24,6 +24,8 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
   async delete() {
     return this.iterateListenersAsync((cb) => cb.deleted?.());
   }
+
+  async loadData() {}
 }
 
 export class ConceptsStore {
@@ -47,6 +49,10 @@ export class ConceptsStore {
     });
   }
 
+  async loadConcept(id: string) {
+    await this.loadConcepts();
+  }
+
   async createConcept(name: string) {
     const board = await this.options.client.createConcept({
       name: name
@@ -58,6 +64,10 @@ export class ConceptsStore {
   async loadConcepts() {
     const response = await this.options.client.concepts();
     this._concepts.setValues(response.concepts);
+  }
+
+  getConcept(id: number) {
+    return this._concepts.getValue(id);
   }
 
   @computed

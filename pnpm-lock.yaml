@@ -53,6 +53,9 @@ importers:
       '@fortawesome/react-fontawesome':
         specifier: ^0.1.18
         version: 0.1.18(@fortawesome/fontawesome-svg-core@6.1.1)(react@18.2.0)
+      '@projectstorm/react-canvas-core':
+        specifier: ^7.0.1
+        version: 7.0.1(@types/react@18.2.9)
       '@projectstorm/tornado-common':
         specifier: workspace:*
         version: link:../tornado-common
@@ -458,6 +461,24 @@ packages:
   /@prisma/engines@4.15.0:
     resolution: {integrity: sha512-FTaOCGs0LL0OW68juZlGxFtYviZa4xdQj/rQEdat2txw0s3Vu/saAPKjNVXfIgUsGXmQ72HPgNr6935/P8FNAA==}
     requiresBuild: true
+
+  /@projectstorm/geometry@7.0.1:
+    resolution: {integrity: sha512-PIameXbigmMR/TIMvIwFAuWnkQHXne/T7qxMpRACAGUt4yc9ktBF6m4VuGOmjvYyyhJfAhULKNicFAdLRAEzOw==}
+    dependencies:
+      lodash: 4.17.21
+    dev: false
+
+  /@projectstorm/react-canvas-core@7.0.1(@types/react@18.2.9):
+    resolution: {integrity: sha512-nELl/y9Wl4D4SWS+I8ogYtHvpz24p5nF4VzSpBf4/nmFDMhZtpjSuPNp456o3vOqZBOT5g7pcZTKsJBl0/M7Aw==}
+    dependencies:
+      '@emotion/react': 11.11.1(@types/react@18.2.9)(react@18.2.0)
+      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.9)(react@18.2.0)
+      '@projectstorm/geometry': 7.0.1
+      lodash: 4.17.21
+      react: 18.2.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
 
   /@remix-run/router@1.6.3:
     resolution: {integrity: sha512-EXJysQ7J3veRECd0kZFQwYYd5sJMcq2O/m60zu1W2l3oVQ9xtub8jTOtYRE0+M2iomyG/W3Ps7+vp2kna0C27Q==}

@@ -35,6 +35,10 @@ export class Collection<Decoded extends { id: number }, Encoded extends { id: nu
     });
   }
 
+  getValue(id: number) {
+    return this.data.get(id);
+  }
+
   get values() {
     return Array.from(this.data.values());
   }

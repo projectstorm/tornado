@@ -5,8 +5,8 @@ export interface ContentViewWidgetProps {
   className?: any;
 }
 
-export const ContentViewWidget: React.FC<ContentViewWidgetProps> = (props) => {
-  return <S.Container className={props.className}></S.Container>;
+export const ContentViewWidget: React.FC<React.PropsWithChildren<ContentViewWidgetProps>> = (props) => {
+  return <S.Container className={props.className}>{props.children}</S.Container>;
 };
 namespace S {
   export const Container = styled.div`

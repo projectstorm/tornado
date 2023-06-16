@@ -5,6 +5,7 @@
     "watch": "webpack-cli --watch"
   },
   "dependencies": {
+    "@projectstorm/react-canvas-core": "^7.0.1",
     "@projectstorm/tornado-common": "workspace:*",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
