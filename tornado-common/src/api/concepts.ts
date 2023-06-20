@@ -1,6 +1,11 @@
 export interface ConceptBoard {
   id: number;
   name: string;
+  data: any;
+}
+
+export interface FileData {
+  id: number;
 }
 
 // !----- list ----
@@ -17,6 +22,12 @@ export type CreateConceptRequest = Pick<ConceptBoard, 'name'>;
 
 export interface CreateConceptResponse {
   concept: ConceptBoard;
+}
+
+// !----- UPDATE ----
+
+export interface UpdateConceptRequest {
+  board: ConceptBoard;
 }
 
 // !----- delete ----

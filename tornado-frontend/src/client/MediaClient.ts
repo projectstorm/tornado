@@ -1,7 +1,8 @@
-import { BaseObserver, Routes } from '@projectstorm/tornado-common';
+import { BaseObserver, FileData, Routes } from '@projectstorm/tornado-common';
 
 export interface MediaUploadListener {
   progressChanged: (percent: number) => any;
+  finished: (data: FileData) => any;
 }
 
 export class MediaUpload extends BaseObserver<MediaUploadListener> {
@@ -15,9 +16,15 @@ export class MediaUpload extends BaseObserver<MediaUploadListener> {
         this.iterateListeners((cb) => cb.progressChanged?.((event.loaded / event.total) * 100));
       }
     });
-    this.xhr.addEventListener('loadend', () => {
+    this.xhr.addEventListener('loadend', (event) => {
       this.iterateListeners((cb) => cb.progressChanged?.(100));
     });
+
+    this.xhr.onreadystatechange = () => {
+      if (this.xhr.readyState === 4) {
+        this.iterateListeners((cb) => cb.finished(JSON.parse(this.xhr.response)));
+      }
+    };
   }
 
   send(url: string) {

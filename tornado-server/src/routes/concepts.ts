@@ -7,7 +7,8 @@ import {
   CreateConceptResponse,
   DeleteConceptsRequest,
   DeleteConceptsResponse,
-  Routes
+  Routes,
+  UpdateConceptRequest
 } from '@projectstorm/tornado-common';
 import { createApiRoute } from '../routeUtils';
 
@@ -50,6 +51,24 @@ export const setupConceptRoutes = (router: Router, system: System) => {
       await system.db.conceptBoard.delete({
         where: {
           id: data.board_id
+        }
+      });
+      return {};
+    }
+  });
+
+  createApiRoute<UpdateConceptRequest, any>({
+    router,
+    system,
+    route: Routes.CONCEPT_UPDATE,
+    cb: async ({ user, data }) => {
+      await system.db.conceptBoard.update({
+        where: {
+          id: data.board.id
+        },
+        data: {
+          data: data.board.data,
+          name: data.board.name
         }
       });
       return {};

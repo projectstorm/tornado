@@ -3,21 +3,43 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { CanvasWidget } from '@projectstorm/react-canvas-core';
 import { ConceptBoardModel } from '../../../../stores/ConceptsStore';
-import { createEngine, createModel } from './utils';
+import { ConceptCanvasEngine } from './ConceptCanvasEngine';
+import { ConceptCanvasModel } from './ConceptCanvasModel';
+import { usePasteMedia } from '../../../../hooks/usePasteMedia';
+import { useSystem } from '../../../../hooks/useSystem';
 
 export interface ConceptCanvasWidgetProps {
   board: ConceptBoardModel;
 }
 
 export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = (props) => {
+  const system = useSystem();
   const [engine] = useState(() => {
-    return createEngine();
+    return new ConceptCanvasEngine();
+  });
+
+  usePasteMedia({
+    gotMedia: (files) => {
+      files.forEach(async (file) => {
+        const media = await system.clientMedia.uploadMedia(file);
+        media.registerListener({
+          finished: (data) => {
+            engine.getModel().addImage(data.id);
+          }
+        });
+      });
+    }
   });
 
   useEffect(() => {
-    const model = createModel();
+    const model = new ConceptCanvasModel(props.board);
+    model.load(engine);
     engine.setModel(model);
   }, [props.board]);
+
+  if (!engine) {
+    return null;
+  }
 
   return <S.Container engine={engine} />;
 };

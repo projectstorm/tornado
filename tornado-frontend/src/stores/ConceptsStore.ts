@@ -1,7 +1,7 @@
 import { TornadoClient } from '../client/TornadoClient';
 import { BaseListener, BaseObserver, ConceptBoard } from '@projectstorm/tornado-common';
 import { Collection } from '../data/Collection';
-import { computed } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 
 export interface ConceptsStoreOptions {
   client: TornadoClient;
@@ -12,13 +12,34 @@ export interface ConceptBoardModelListener extends BaseListener {
   deleted: () => Promise<void>;
 }
 
+export interface ConceptBoardModelOptions {
+  board: ConceptBoard;
+  client: TornadoClient;
+}
+
 export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
-  constructor(public data: ConceptBoard) {
+  @observable
+  board: ConceptBoard;
+
+  constructor(protected options: ConceptBoardModelOptions) {
     super();
+    this.board = options.board;
+    makeObservable(this);
+  }
+
+  async setCanvasData(data: any) {
+    this.board.data = data;
+    await this.options.client.updateConcept({
+      board: this.board
+    });
+  }
+
+  updateBoard(board: ConceptBoard) {
+    this.board = board;
   }
 
   get id() {
-    return this.data.id;
+    return this.board.id;
   }
 
   async delete() {
@@ -34,7 +55,10 @@ export class ConceptsStore {
   constructor(protected options: ConceptsStoreOptions) {
     this._concepts = new Collection({
       create: (c) => {
-        const board = new ConceptBoardModel(c);
+        const board = new ConceptBoardModel({
+          board: c,
+          client: options.client
+        });
         board.registerListener({
           deleted: async () => {
             await this.options.client.deleteConcept({
@@ -45,7 +69,7 @@ export class ConceptsStore {
         });
         return board;
       },
-      update: (c, board) => (board.data = c)
+      update: (c, board) => board.updateBoard(c)
     });
   }
 

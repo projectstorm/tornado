@@ -73,7 +73,7 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
               },
               cells: {
                 id: `${c.id}`,
-                name: c.data.name
+                name: c.board.name
               }
             };
           }) || []

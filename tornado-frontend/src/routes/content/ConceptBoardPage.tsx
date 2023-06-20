@@ -16,13 +16,6 @@ export const ConceptBoardPage: React.FC<ConceptBoardPageProps> = observer((props
   const system = useSystem();
   const { id } = useParams<{ id: string }>();
   useAuthenticated();
-  usePasteMedia({
-    gotMedia: (files) => {
-      files.forEach((file) => {
-        system.clientMedia.uploadMedia(file);
-      });
-    }
-  });
   useEffect(() => {
     system.conceptStore.loadConcepts();
     return autorun(() => {
