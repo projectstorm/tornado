@@ -32,4 +32,7 @@ model Media {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
+  width     Int
+  height    Int
+  checksum  String
 }

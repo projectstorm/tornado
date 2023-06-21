@@ -7,32 +7,39 @@ import {
   GenerateWidgetEvent
 } from '@projectstorm/react-canvas-core';
 import { ImageElementWidget } from './ImageElementWidget';
+import { ImageLayerModel } from '../image-layer/ImageLayerFactory';
 
 export class ImageElement extends BasePositionModel {
+  public width: number;
+  public height: number;
+
   constructor(public imageID: number) {
     super({
       type: ImageElementFactory.TYPE
     });
     this.setPosition(100, 100);
+    this.width = null;
+    this.height = null;
+  }
+
+  getCanvasModel() {
+    return (this.getParent() as ImageLayerModel).getParent();
   }
 
   serialize() {
     return {
       ...super.serialize(),
-      image_id: this.imageID
+      image_id: this.imageID,
+      width: this.width,
+      height: this.height
     };
   }
 
   deserialize(event: DeserializeEvent<this>) {
-    super.deserialize({
-      ...event,
-      data: {
-        ...event.data,
-        x: event.data.x || 0,
-        y: event.data.y || 0
-      }
-    });
+    super.deserialize(event);
     this.imageID = event.data.image_id;
+    this.width = event.data.width;
+    this.height = event.data.height;
     this.setSelected(false);
   }
 }

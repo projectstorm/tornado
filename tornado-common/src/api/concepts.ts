@@ -6,6 +6,8 @@ export interface ConceptBoard {
 
 export interface FileData {
   id: number;
+  width: number;
+  height: number;
 }
 
 // !----- list ----

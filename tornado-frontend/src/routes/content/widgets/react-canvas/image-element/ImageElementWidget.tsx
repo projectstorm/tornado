@@ -1,8 +1,8 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ImageElement } from './ImageElementFactory';
 import { ResponseImageWidget } from './ResponseImageWidget';
-import { useEffect } from 'react';
 import { useForceUpdate } from '../../../../../hooks/useForceUpdate';
 
 export interface ImageElementWidgetProps {
@@ -26,7 +26,9 @@ export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => 
       selected={props.model.isSelected()}
       style={{
         left: props.model.getX(),
-        top: props.model.getY()
+        top: props.model.getY(),
+        width: props.model.width,
+        height: props.model.height
       }}
     >
       <S.Image id={props.model.imageID} />
@@ -36,9 +38,9 @@ export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => 
 namespace S {
   export const Container = styled.div<{ selected: boolean }>`
     position: absolute;
-    border: solid 1px ${(p) => (p.selected ? 'cyan' : 'transparent')};
-    width: 200px;
-    height: 200px;
+    border: solid 2px ${(p) => (p.selected ? 'cyan' : 'transparent')};
+    ${(p) => (p.selected ? 'box-shadow: 0 0 20px rgba(0, 255, 255, 0.32)' : '')};
+    box-sizing: border-box;
     pointer-events: all;
   `;
 

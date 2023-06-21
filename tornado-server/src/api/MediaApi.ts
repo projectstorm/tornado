@@ -6,6 +6,7 @@ import * as path from 'path';
 import { System } from '../System';
 import { User } from '@prisma/client';
 import { MediaSize } from '@projectstorm/tornado-common';
+import * as crypto from 'crypto';
 
 export class MediaApi extends AbstractApi {
   static SIZES = {
@@ -21,6 +22,10 @@ export class MediaApi extends AbstractApi {
     });
   }
 
+  generateChecksum(str: Buffer) {
+    return crypto.createHash('md5').update(str).digest('hex');
+  }
+
   async getMediaPath(image: number, size: MediaSize) {
     if (size === MediaSize.ORIGINAL) {
       return path.join(this.originalDir, `${image}`);
@@ -29,9 +34,13 @@ export class MediaApi extends AbstractApi {
   }
 
   async uploadFile(user: User, file: Buffer) {
+    const meta = await sharp(file).metadata();
     const media = await this.system.db.media.create({
       data: {
-        userId: user.id
+        userId: user.id,
+        width: meta.width,
+        height: meta.height,
+        checksum: this.generateChecksum(file)
       }
     });
     try {
@@ -64,7 +73,9 @@ export class MediaApi extends AbstractApi {
             width: size,
             height: size
           })
-          .jpeg()
+          .jpeg({
+            quality: 100
+          })
           .toFile(path.join(this.resizeDir, `${media.id}.${size}.jpg`));
       } catch (ex) {
         this.logger.error(`failed to resize original to ${size}`, ex);

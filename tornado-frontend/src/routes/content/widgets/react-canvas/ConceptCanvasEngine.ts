@@ -17,7 +17,9 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
   elementBank: FactoryBank<ImageElementFactory>;
 
   constructor() {
-    super();
+    super({
+      registerDefaultDeleteItemsAction: true
+    });
     this.elementBank = new FactoryBank();
     this.elementBank.registerFactory(new ImageElementFactory());
     this.registerFactoryBank(this.elementBank);

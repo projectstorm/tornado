@@ -4,9 +4,10 @@ import { ConceptBoardModel } from '../../../../stores/ConceptsStore';
 import * as _ from 'lodash';
 import { ImageElement } from './image-element/ImageElementFactory';
 import { action } from 'mobx';
+import { FileData } from '@projectstorm/tornado-common';
 
 export class ConceptCanvasModel extends CanvasModel {
-  constructor(protected model: ConceptBoardModel) {
+  constructor(public model: ConceptBoardModel) {
     super();
 
     const layer = new ImageLayerModel();
@@ -29,7 +30,13 @@ export class ConceptCanvasModel extends CanvasModel {
     this.model.setCanvasData(this.serialize());
   }, 500);
 
-  addImage(id: number) {
-    this.getLayers()[0].addModel(new ImageElement(id));
+  addImage(data: FileData) {
+    const element = new ImageElement(data.id);
+
+    const size = 500;
+    element.width = size;
+    element.height = (size / data.width) * data.height;
+
+    this.getLayers()[0].addModel(element);
   }
 }

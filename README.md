@@ -1,12 +1,22 @@
-![](./tornado-frontend/media/logo-small.png)
+## Tornado (WIP)
 
-Concept board software for ambitious creatives 🎨
+Concept image-board software for ambitious creatives 🎨
+
+## What
+
+Tornado is self-hosted software for the web (currently in development) that provides digital media artists with the ability to create concept and reference boards.
+You can simply drag in images, or paste images you have copied in your clipboard, and then arrange them as you see fit.
+
 
 ## Features:
 
 * SPA (Single Page App)
 * Multiple Users
 * Email + password authentication
+* Image resizing on the server
+
+![](./images/screenshot.png)
+![](./images/screenshot2.png)
 
 ## Requirements
 
@@ -32,6 +42,7 @@ Tornado is configured using environment variables.
 | ADMIN_USER_PASS    |         | Password of the admin user (this can be removed after the admin user is created on first boot) |
 | CONTENT_DIRECTORY  |         | The main directory where all content is uploaded, Tornado will created the child directories   |
 
-## Author
+## About
 
-Dylan Vorster
+Author: Dylan Vorster (dylanvorster.com)
+
