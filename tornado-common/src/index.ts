@@ -8,3 +8,4 @@ export * from './BaseObserver';
 
 export * from './api/auth';
 export * from './api/concepts';
+export * from './api/media';

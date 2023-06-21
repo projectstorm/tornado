@@ -1,4 +1,4 @@
-import { BaseObserver, FileData, Routes } from '@projectstorm/tornado-common';
+import { BaseObserver, FileData, GetMediaRequest, MediaSize, Routes } from '@projectstorm/tornado-common';
 
 export interface MediaUploadListener {
   progressChanged: (percent: number) => any;
@@ -38,16 +38,58 @@ export class MediaUpload extends BaseObserver<MediaUploadListener> {
   }
 }
 
+export class MediaObject {
+  cache: Map<MediaSize, string>;
+
+  constructor(protected id: number, protected client: MediaClient) {
+    this.cache = new Map();
+  }
+
+  async getURL(size: MediaSize) {
+    if (!this.cache.has(size)) {
+      const data = await this.client.getMedia(this.id, size);
+      const url = window.URL.createObjectURL(data);
+      this.cache.set(size, url);
+    }
+    return this.cache.get(size);
+  }
+}
+
 export interface MediaClientOptions {
   baseURL: string;
 }
 
 export class MediaClient {
-  constructor(protected options: MediaClientOptions) {}
+  cache: Map<number, MediaObject>;
+
+  constructor(protected options: MediaClientOptions) {
+    this.cache = new Map();
+  }
 
   uploadMedia(file: File) {
     const media = new MediaUpload(file);
     media.send(`${this.options.baseURL}${Routes.UPLOAD_MEDIA}`);
     return media;
+  }
+
+  getMediaObject(image: number) {
+    if (!this.cache.has(image)) {
+      this.cache.set(image, new MediaObject(image, this));
+    }
+    return this.cache.get(image);
+  }
+
+  async getMedia(image: number, size: MediaSize) {
+    const res = await fetch(`${this.options.baseURL}${Routes.GET_MEDIA}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        image: image,
+        size: size
+      } as GetMediaRequest)
+    });
+    return await res.blob();
   }
 }

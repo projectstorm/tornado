@@ -1,11 +1,12 @@
 import { User } from '@prisma/client';
 import { Routes } from '@projectstorm/tornado-common';
-import { Router } from 'express';
+import { Response, Router } from 'express';
 import { System } from './System';
 
 export interface ApiEvent<T> {
   data: T;
   user: User;
+  response: Response;
 }
 
 export interface CreateAuthenticatedApi<Req, Res> {
@@ -28,7 +29,8 @@ export const createApiRoute = <Req, Res>(options: CreateAuthenticatedApi<Req, Re
     options.system.logger.debug(`api -> ${options.route} for user ${user.id}`);
     const resObject = await options.cb({
       user: user,
-      data: req.body as Req
+      data: req.body as Req,
+      response: res
     });
     if (resObject) {
       res.json(resObject);

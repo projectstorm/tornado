@@ -5,13 +5,27 @@ import { ENV } from '../Env';
 import * as path from 'path';
 import { System } from '../System';
 import { User } from '@prisma/client';
+import { MediaSize } from '@projectstorm/tornado-common';
 
 export class MediaApi extends AbstractApi {
+  static SIZES = {
+    [MediaSize.SMALL]: 200,
+    [MediaSize.MEDIUM]: 500,
+    [MediaSize.LARGE]: 1000
+  };
+
   constructor(system: System) {
     super({
       name: 'MEDIA',
       system
     });
+  }
+
+  async getMediaPath(image: number, size: MediaSize) {
+    if (size === MediaSize.ORIGINAL) {
+      return path.join(this.originalDir, `${image}`);
+    }
+    return path.join(this.resizeDir, `${image}.${MediaApi.SIZES[size]}.jpg`);
   }
 
   async uploadFile(user: User, file: Buffer) {
@@ -34,8 +48,8 @@ export class MediaApi extends AbstractApi {
     }
 
     // resize
-    const sizes = [200, 500, 1000];
-    for (let size of sizes) {
+    for (let k in MediaApi.SIZES) {
+      const size = MediaApi.SIZES[k];
       try {
         this.logger.info(`resizing to ${size}`);
         await sharp(file)

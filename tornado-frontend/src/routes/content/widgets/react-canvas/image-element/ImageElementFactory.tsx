@@ -9,7 +9,7 @@ import {
 import { ImageElementWidget } from './ImageElementWidget';
 
 export class ImageElement extends BasePositionModel {
-  constructor(protected imageID: number) {
+  constructor(public imageID: number) {
     super({
       type: ImageElementFactory.TYPE
     });
@@ -33,6 +33,7 @@ export class ImageElement extends BasePositionModel {
       }
     });
     this.imageID = event.data.image_id;
+    this.setSelected(false);
   }
 }
 
