@@ -6,3 +6,4 @@ tsconfig.tsbuildinfo
 .idea
 .tornado-store
 .env
+pnpm-links.js

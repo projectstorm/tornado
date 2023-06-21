@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   AbstractReactFactory,
   BaseEvent,
+  BaseModelListener,
   DeserializeEvent,
   FactoryBank,
   GenerateModelEvent,
@@ -12,7 +13,7 @@ import {
 import { ImageElement, ImageElementFactory } from '../image-element/ImageElementFactory';
 import * as _ from 'lodash';
 import { ConceptCanvasEngine } from '../ConceptCanvasEngine';
-import { BaseModelListener } from '@projectstorm/react-canvas-core/dist/@types/core-models/BaseModel';
+import { ConceptCanvasModel } from '../ConceptCanvasModel';
 
 export class ImageLayerFactory extends AbstractReactFactory<ImageLayerModel, ConceptCanvasEngine> {
   static TYPE = 'concept/image/layer';
@@ -45,14 +46,46 @@ export interface ImageLayerModelListener extends BaseModelListener {
 export type ImageLayerGenerics = LayerModelGenerics & {
   ENGINE: ConceptCanvasEngine;
   LISTENER: ImageLayerModelListener;
+  PARENT: ConceptCanvasModel;
 };
 
 export class ImageLayerModel extends LayerModel<ImageLayerGenerics> {
+  deserializing: boolean;
+
   constructor() {
     super({
       type: ImageLayerFactory.TYPE,
       transformed: true
     });
+
+    this.deserializing = false;
+
+    this.registerListener({
+      added: ({ model }) => {
+        this.save();
+        model.registerListener({
+          positionChanged: () => {
+            this.save();
+          },
+          entityRemoved: () => {
+            this.save();
+          }
+        });
+      }
+    });
+  }
+
+  save() {
+    if (this.deserializing) {
+      return;
+    }
+    this.getParent().save();
+  }
+
+  deserialize(event: DeserializeEvent) {
+    this.deserializing = true;
+    super.deserialize(event);
+    this.deserializing = false;
   }
 
   addModel(model: ImageLayerGenerics['CHILDREN']) {

@@ -10,41 +10,19 @@ export class ConceptCanvasModel extends CanvasModel {
     super();
 
     const layer = new ImageLayerModel();
-    layer.registerListener({
-      added: ({ model }) => {
-        this.save();
-
-        model.registerListener({
-          positionChanged: () => {
-            this.save();
-          },
-          entityRemoved: () => {
-            this.save();
-          }
-        });
-      }
-    });
     this.addLayer(layer);
   }
 
   load(engine: CanvasEngine) {
-    // @ts-ignore
-    this.deserialize({
-      data: this.model.board.data || {},
-      engine: engine
-    });
+    if (!this.model.board.data) {
+      return;
+    }
+    this.deserializeModel(this.model.board.data, engine);
   }
 
   @action deserialize(event: DeserializeEvent<this>) {
-    this.removeLayer(this.layers[0]);
-    super.deserialize({
-      ...event,
-      data: {
-        ...event.data,
-        offsetX: 0,
-        offsetY: 0
-      }
-    });
+    this.layers = [];
+    super.deserialize(event);
   }
 
   save = _.debounce(() => {
