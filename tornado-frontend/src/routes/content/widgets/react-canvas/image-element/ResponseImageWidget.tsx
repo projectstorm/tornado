@@ -3,22 +3,47 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useSystem } from '../../../../../hooks/useSystem';
 import { MediaSize } from '@projectstorm/tornado-common';
+import { ImageElement } from './ImageElementFactory';
 
 export interface ResponseImageWidgetProps {
-  id: number;
   className?: any;
+  model: ImageElement;
 }
 
 export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) => {
   const system = useSystem();
   const [object] = useState(() => {
-    return system.clientMedia.getMediaObject(props.id);
+    return system.clientMedia.getMediaObject(props.model.imageID);
   });
   const [url, setUrl] = useState<string>(null);
+  const [size, setSize] = useState<MediaSize>();
 
   useEffect(() => {
-    object.getURL(MediaSize.MEDIUM).then(setUrl);
+    const compute = (zoom: number) => {
+      if (zoom < 15) {
+        setSize(MediaSize.SMALL);
+      } else if (zoom >= 15 && zoom < 50) {
+        setSize(MediaSize.MEDIUM);
+      } else if (zoom >= 50 && zoom < 120) {
+        setSize(MediaSize.LARGE);
+      } else {
+        setSize(MediaSize.ORIGINAL);
+      }
+    };
+
+    compute(props.model.getCanvasModel().getZoomLevel());
+    return props.model.getCanvasModel().registerListener({
+      zoomUpdated(event) {
+        compute(event.zoom);
+      }
+    }).deregister;
   }, []);
+
+  useEffect(() => {
+    if (size) {
+      object.getURL(size).then(setUrl);
+    }
+  }, [size]);
 
   return <S.Container className={props.className} url={url}></S.Container>;
 };

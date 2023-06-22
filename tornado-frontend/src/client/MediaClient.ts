@@ -39,7 +39,7 @@ export class MediaUpload extends BaseObserver<MediaUploadListener> {
 }
 
 export class MediaObject {
-  cache: Map<MediaSize, string>;
+  cache: Map<MediaSize, Promise<string>>;
 
   constructor(protected id: number, protected client: MediaClient) {
     this.cache = new Map();
@@ -47,9 +47,10 @@ export class MediaObject {
 
   async getURL(size: MediaSize) {
     if (!this.cache.has(size)) {
-      const data = await this.client.getMedia(this.id, size);
-      const url = window.URL.createObjectURL(data);
-      this.cache.set(size, url);
+      this.cache.set(
+        size,
+        this.client.getMedia(this.id, size).then((data) => window.URL.createObjectURL(data))
+      );
     }
     return this.cache.get(size);
   }

@@ -5,12 +5,14 @@ import { autorun, makeObservable, observable } from 'mobx';
 import { ThemeDark } from './theme/theme-dark';
 import { ConceptsStore } from './stores/ConceptsStore';
 import { MediaClient } from './client/MediaClient';
+import { LayerStore } from './stores/LayerStore';
 
 export class System {
   client: TornadoClient;
   clientMedia: MediaClient;
 
   userStore: UserStore;
+  layerStore: LayerStore;
 
   @observable
   conceptStore: ConceptsStore;
@@ -31,6 +33,8 @@ export class System {
     this.userStore = new UserStore({
       client: this.client
     });
+    this.layerStore = new LayerStore();
+
     autorun(() => {
       if (this.userStore.authenticatedUser) {
         this.conceptStore = new ConceptsStore({

@@ -31,7 +31,7 @@ export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => 
         height: props.model.height
       }}
     >
-      <S.Image id={props.model.imageID} />
+      <S.Image model={props.model} />
     </S.Container>
   );
 };

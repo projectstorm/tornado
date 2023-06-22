@@ -8,6 +8,7 @@ import { BodyWidget } from './BodyWidget';
 import { BrowserRouter } from 'react-router-dom';
 import { System } from '../../System';
 import { SystemContext } from '../../hooks/useSystem';
+import { LayersWidget } from './LayersWidget';
 
 export interface RootWidgetProps {
   system: System;
@@ -25,6 +26,7 @@ export const RootWidget: React.FC<RootWidgetProps> = (props) => {
               <S.Body />
               <FooterWidget />
             </S.Container>
+            <S.Layers />
           </SystemContext.Provider>
         </BrowserRouter>
       </ThemeProvider>
@@ -41,6 +43,10 @@ namespace S {
 
   export const Body = styled(BodyWidget)`
     flex-grow: 1;
+  `;
+
+  export const Layers = styled(LayersWidget)`
+    position: absolute;
   `;
 
   export const Global = css`
