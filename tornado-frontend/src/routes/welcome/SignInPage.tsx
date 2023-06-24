@@ -33,7 +33,7 @@ export const SignInPage: React.FC<SignInPageProps> = (props) => {
             return (
               <>
                 <S.Field label="Email" name="email" />
-                <S.Field label="Password" name="password" type="password" />
+                <S.Field label="Password" name="password" type="password" submit={true} />
                 <ButtonWidget type={ButtonType.PRIMARY} label="Sign in" action={submitForm} />
               </>
             );

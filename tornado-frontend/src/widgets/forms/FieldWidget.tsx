@@ -7,11 +7,13 @@ export interface FieldWidgetProps {
   value: string | null;
   onChange: (value: string | null) => any;
   type?: HTMLInputTypeAttribute;
+  forwardRef?: React.RefObject<HTMLInputElement>;
 }
 
 export const FieldWidget: React.FC<FieldWidgetProps> = (props) => {
   return (
     <S.Input
+      ref={props.forwardRef}
       placeholder={props.placeholder}
       type={props.type}
       value={props.value?.trim() || ''}
@@ -29,11 +31,13 @@ namespace S {
   export const Input = styled.input`
     border: none;
     padding: 10px 15px;
-    border-radius: 6px;
+    border-radius: 3px;
     font-size: 20px;
     color: ${(p) => p.theme.controls.field.color};
     background: ${(p) => p.theme.controls.field.background};
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 
     &::placeholder {
       color: ${(p) => p.theme.controls.field.placeholder};
