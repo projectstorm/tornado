@@ -50,13 +50,13 @@ jobs:
       - name: Extract metadata (tags, labels) for Docker
         if: steps.changesets.outputs.published == 'true'
         id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        uses: docker/metadata-action@v4
         with:
           images: projectstorm/tornado
 
       - name: Build and push Docker image
         if: steps.changesets.outputs.published == 'true'
-        uses: docker/build-push-action
+        uses: docker/build-push-action@v4
         with:
           context: .
           file: ./Dockerfile
