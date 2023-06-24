@@ -34,7 +34,6 @@ jobs:
         run: pnpm build
 
       - name: Build and push Docker image
-        if: steps.changesets.outputs.published == 'true'
         uses: docker/build-push-action
         with:
           context: .
