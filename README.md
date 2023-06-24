@@ -1,5 +1,7 @@
 ## Tornado (WIP)
 
+[![Build](https://github.com/projectstorm/tornado/actions/workflows/test.yml/badge.svg)](https://github.com/projectstorm/tornado/actions/workflows/test.yml)
+
 Concept image-board software for ambitious creatives 🎨
 
 ## What
