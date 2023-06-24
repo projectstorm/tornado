@@ -32,3 +32,13 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Build and push Docker image
+        if: steps.changesets.outputs.published == 'true'
+        uses: docker/build-push-action
+        with:
+          context: .
+          file: ./Dockerfile
+          push: false
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
