@@ -4,7 +4,8 @@
   "scripts": {
     "watch": "nodemon ./dist/index.js",
     "primsa:migrate": "pnpm prisma migrate dev",
-    "primsa:gen": "pnpm prisma generate"
+    "primsa:gen": "pnpm prisma generate",
+    "postinstall": "pnpm primsa:gen"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
