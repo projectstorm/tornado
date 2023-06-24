@@ -42,6 +42,27 @@ Tornado is configured using environment variables.
 | ADMIN_USER_PASS    |         | Password of the admin user (this can be removed after the admin user is created on first boot) |
 | CONTENT_DIRECTORY  |         | The main directory where all content is uploaded, Tornado will created the child directories   |
 
+## Running with docker
+
+Quick start using docker-compose:
+
+```yaml
+version: "3"
+services:
+  tornado:
+    image: projectstorm/tornado:latest
+    ports:
+      - "80:8080"
+    environment:
+      DATABASE_URL: mysql://root:tornado@tornado_database:3306/mytornado
+      SITE_URL: http://localhost:80
+  tornado_database:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: tornado
+      MYSQL_DATABASE: mytornado
+```
+
 ## About
 
 Author: Dylan Vorster (dylanvorster.com)

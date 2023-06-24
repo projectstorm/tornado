@@ -1,5 +1,6 @@
 {
   "name": "@projectstorm/tornado-server",
+  "private": true,
   "scripts": {
     "watch": "nodemon ./dist/index.js",
     "primsa:migrate": "pnpm prisma migrate dev",

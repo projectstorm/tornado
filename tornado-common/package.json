@@ -1,6 +1,7 @@
 {
   "name": "@projectstorm/tornado-common",
   "main": "./dist/index.js",
+  "private": true,
   "types": "./dist/@types/index",
   "dependencies": {
     "@types/node": "^20.3.0",
