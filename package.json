@@ -1,6 +1,13 @@
 {
   "name": "@projectstorm/tornado",
-  "private": true,
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/projectstorm/tornado.git"
+  },
+  "author": {
+    "name": "Dylan Vorster"
+  },
   "scripts": {
     "build": "tsc -b && pnpm run -r build",
     "build:prod": "NODE_ENV=production pnpm build",
