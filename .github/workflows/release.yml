@@ -41,7 +41,7 @@ jobs:
 
       - name: Changeset tags
         if: steps.changesets.outputs.hasChangesets == 'false'
-        run: pnpm changeset tag
+        run: pnpm changeset tag && git push --tags origin
 
       - name: Login to Docker Hub
         if: steps.changesets.outputs.hasChangesets == 'false'
