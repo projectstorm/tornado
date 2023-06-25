@@ -58,7 +58,7 @@ jobs:
           images: projectstorm/tornado
           tags: |
             # version
-            type=match,pattern=tornado-server@(\d*.\d*.*)
+            type=match,pattern=tornado-server@(\d*.\d*.*),group=1
             # set latest tag for master branch
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
