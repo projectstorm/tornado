@@ -21,6 +21,7 @@ You can simply drag in images, or paste images you have copied in your clipboard
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)
 
+
 ## Requirements
 
 * MySQL / MariaDB database
