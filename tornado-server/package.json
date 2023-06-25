@@ -1,6 +1,6 @@
 {
   "name": "@projectstorm/tornado-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "watch": "nodemon ./dist/index.js",
