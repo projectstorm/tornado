@@ -36,8 +36,6 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         id: changesets
-        with:
-         publish: pnpm changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,8 +53,6 @@ jobs:
         with:
           images: projectstorm/tornado
           tags: |
-            # version
-            type=match,pattern=tornado-server@(\d*.\d*.*),group=1
             # set latest tag for master branch
             type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'master') }}
 
