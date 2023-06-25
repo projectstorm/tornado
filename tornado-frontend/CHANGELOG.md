@@ -1,5 +1,11 @@
 # @projectstorm/tornado-frontend
 
+## 1.0.2
+
+### Patch Changes
+
+- 5dcaebf: bump
+
 ## 1.0.1
 
 ### Patch Changes

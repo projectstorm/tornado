@@ -1,7 +1,7 @@
 {
   "name": "@projectstorm/tornado-frontend",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "build": "webpack-cli",
     "watch": "webpack-cli --watch"
