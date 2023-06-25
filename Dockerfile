@@ -19,4 +19,4 @@ COPY tornado-server /app/tornado-server/
 
 RUN pnpm build:prod
 
-CMD node tordnado-server/dist/index.js
+CMD node tornado-server/dist/index.js
