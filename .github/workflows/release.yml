@@ -36,12 +36,10 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         id: changesets
+        with:
+         publish: yarn changeset tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Changeset tags
-        if: steps.changesets.outputs.hasChangesets == 'false'
-        run: pnpm changeset tag && git push --tags origin
 
       - name: Login to Docker Hub
         if: steps.changesets.outputs.hasChangesets == 'false'
