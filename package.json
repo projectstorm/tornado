@@ -13,6 +13,7 @@
     "build:prod": "NODE_ENV=production pnpm build",
     "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch' 'pnpm services:dev'",
     "watch:ts": "tsc -b --watch",
+    "release": "pnpm changeset version",
     "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
     "services:dev": "docker-compose up"
