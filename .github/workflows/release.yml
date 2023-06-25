@@ -36,6 +36,11 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@v1
         id: changesets
+<<<<<<< Updated upstream
+=======
+        with:
+         publish: pnpm changeset tag
+>>>>>>> Stashed changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
