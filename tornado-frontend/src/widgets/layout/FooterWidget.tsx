@@ -8,7 +8,7 @@ export const FooterWidget: React.FC<FooterWidgetProps> = (props) => {
   return (
     <S.Container>
       <S.Meta>By Project STORM</S.Meta>
-      <S.Meta>Version 0.0.1</S.Meta>
+      <S.Meta>Version 1.0.0</S.Meta>
     </S.Container>
   );
 };
