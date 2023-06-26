@@ -5,12 +5,14 @@ export enum EnvVars {
   ADMIN_USER_EMAIL = 'ADMIN_USER_EMAIL',
   ADMIN_USER_PASS = 'ADMIN_USER_PASSWORD',
   ADMIN_USER_NAME = 'ADMIN_USER_NAME',
-  CONTENT_DIRECTORY = 'CONTENT_DIRECTORY'
+  CONTENT_DIRECTORY = 'CONTENT_DIRECTORY',
+  UPLOAD_LIMIT = 'UPLOAD_LIMIT'
 }
 
 export const EnvDefaults = {
   [EnvVars.PORT]: 8080,
-  [EnvVars.ADMIN_USER_NAME]: 'Admin User'
+  [EnvVars.ADMIN_USER_NAME]: 'Admin User',
+  [EnvVars.UPLOAD_LIMIT]: '10MB'
 };
 
 export const ENV = Object.keys(EnvVars).reduce((prev, cur) => {

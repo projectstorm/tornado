@@ -7,6 +7,8 @@ import { ENV } from './Env';
 import { setupConceptRoutes } from './routes/concepts';
 import { setupMediaRoutes } from './routes/media';
 import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
+
 // singletons
 const app = express();
 const router = express.Router();
@@ -14,10 +16,11 @@ const system = new System();
 
 (async () => {
   // configure express top-level
+  app.use(compression());
   app.use(express.json());
   app.use(
     bodyParser.raw({
-      limit: '10MB'
+      limit: ENV.UPLOAD_LIMIT
     })
   );
   app.use('/', router);
