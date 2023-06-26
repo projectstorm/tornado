@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { styled } from '../../theme/theme';
 import { FONT } from '../../fonts';
+import { ENV } from '../../Env';
 
 export interface FooterWidgetProps {}
 
@@ -8,7 +9,7 @@ export const FooterWidget: React.FC<FooterWidgetProps> = (props) => {
   return (
     <S.Container>
       <S.Meta>By Project STORM</S.Meta>
-      <S.Meta>Version 1.0.0</S.Meta>
+      <S.Meta>Version {ENV.version}</S.Meta>
     </S.Container>
   );
 };

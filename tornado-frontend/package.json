@@ -17,6 +17,7 @@
     "@projectstorm/react-canvas-core": "^7.0.1",
     "@projectstorm/tornado-common": "workspace:*",
     "formik": "^2.4.1",
+    "framer-motion": "^10.12.17",
     "lodash": "^4.17.21",
     "mobx": "^6.9.0",
     "mobx-react": "^7.6.0",

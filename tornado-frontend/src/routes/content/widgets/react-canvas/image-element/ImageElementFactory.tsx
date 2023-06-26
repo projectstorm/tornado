@@ -18,6 +18,7 @@ export class ImageElement extends BasePositionModel {
       type: ImageElementFactory.TYPE
     });
     this.setPosition(100, 100);
+    this.setLocked(false);
     this.width = null;
     this.height = null;
   }

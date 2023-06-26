@@ -25,6 +25,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = (props) =
         media.registerListener({
           finished: (data) => {
             engine.getModel().addImage(data);
+            engine.repaintCanvas();
           }
         });
       });

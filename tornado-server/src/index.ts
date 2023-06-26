@@ -14,6 +14,8 @@ const app = express();
 const router = express.Router();
 const system = new System();
 
+const rootPackage = require(path.join(__dirname, '../../package.json')) as { version: string };
+
 (async () => {
   // configure express top-level
   app.use(compression());
@@ -36,6 +38,7 @@ const system = new System();
   // serve index and assets
   await setupStaticMiddleware({
     app,
+    version: rootPackage.version,
     siteUrl: ENV.SITE_URL,
     staticPath: path.join(__dirname, '../../tornado-frontend/dist-web')
   });
