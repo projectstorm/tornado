@@ -11,17 +11,16 @@
   "scripts": {
     "build": "tsc -b && pnpm run -r build",
     "build:prod": "NODE_ENV=production pnpm build",
-    "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch' 'pnpm services:dev'",
-    "watch:ts": "tsc -b --watch",
-    "release": "pnpm changeset version",
-    "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx}\"",
-    "services:dev": "docker-compose up"
+    "ncu": "ncu -u && pnpm recursive exec -- ncu -u",
+    "release": "pnpm changeset version",
+    "services:dev": "docker-compose up",
+    "watch": "concurrently 'pnpm watch:ts' 'pnpm run -r watch' 'pnpm services:dev'",
+    "watch:ts": "tsc -b --watch"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.1",
-    "typescript": "^5.1.3",
+    "concurrently": "^8.2.0",
     "prettier": "2.8.8",
-    "concurrently": "^8.2.0"
+    "typescript": "^5.1.3"
   }
 }

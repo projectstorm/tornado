@@ -30,6 +30,7 @@ export interface SetupStaticMiddlewareOptions {
   app: Application;
   staticPath: string;
   siteUrl: string;
+  version: string;
 }
 
 export const setupStaticMiddleware = async (options: SetupStaticMiddlewareOptions) => {
@@ -52,7 +53,8 @@ export const setupStaticMiddleware = async (options: SetupStaticMiddlewareOption
 
         const script = `window.env=${JSON.stringify({
           user: req.user || null,
-          site_url: options.siteUrl
+          site_url: options.siteUrl,
+          version: options.version
         })}`;
         $('head').prepend(`<script>${script}</script>`);
       }

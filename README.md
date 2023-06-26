@@ -39,14 +39,15 @@ You can simply drag in images, or paste images you have copied in your clipboard
 
 Tornado is configured using environment variables.
 
-| name               | default | desc                                                                                           |
-|--------------------|---------|------------------------------------------------------------------------------------------------|
-| SITE_URL           |         | example: https://tornado.example.com                                                           |
-| PORT               | 8080    | Port to start the server on                                                                    |
-| DATABASE_URL       |         | mysql://{user}:{pass}@{host}:{port}/{db}                                                       |
-| ADMIN_USER_EMAIL   |         | Email address of the admin user (for login)                                                    |
-| ADMIN_USER_PASS    |         | Password of the admin user (this can be removed after the admin user is created on first boot) |
-| CONTENT_DIRECTORY  |         | The main directory where all content is uploaded, Tornado will created the child directories   |
+| name                | default | desc                                                                                           |
+|---------------------|---------|------------------------------------------------------------------------------------------------|
+| SITE_URL            |         | example: https://tornado.example.com                                                           |
+| PORT                | 8080    | Port to start the server on                                                                    |
+| DATABASE_URL        |         | mysql://{user}:{pass}@{host}:{port}/{db}                                                       |
+| ADMIN_USER_EMAIL    |         | Email address of the admin user (for login)                                                    |
+| ADMIN_USER_PASS     |         | Password of the admin user (this can be removed after the admin user is created on first boot) |
+| CONTENT_DIRECTORY   |         | The main directory where all content is uploaded, Tornado will created the child directories   |
+| UPLOAD_LIMIT        | 10MB    | Express upload limit (mostly relevant to image uploads)                                        |
 
 ## Running with docker
 
