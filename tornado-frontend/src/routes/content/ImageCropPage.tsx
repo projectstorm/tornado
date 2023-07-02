@@ -43,6 +43,19 @@ export const ImageCropPage: React.FC = observer((props) => {
           }}
         />
         <S.Button
+          type={ButtonType.NORMAL}
+          label="Reset to full size"
+          action={async () => {
+            const data = cropperRef.current.cropper.getImageData();
+            cropperRef.current.cropper.setData({
+              x: 0,
+              y: 0,
+              width: data.naturalWidth,
+              height: data.naturalHeight
+            });
+          }}
+        />
+        <S.Button
           type={ButtonType.PRIMARY}
           label="Crop"
           action={async () => {
