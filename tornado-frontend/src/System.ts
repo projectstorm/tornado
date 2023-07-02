@@ -60,6 +60,10 @@ export class System {
     makeObservable(this);
   }
 
+  updateTitle(title: string) {
+    document.title = `Tornado${title ? ` | ${title}` : ''}`;
+  }
+
   toggleTheme() {
     if (this.theme.light) {
       this.theme = ThemeDark;

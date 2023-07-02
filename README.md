@@ -10,7 +10,7 @@ Concept image-board software for ambitious creatives 🎨
 ## What
 
 Tornado is self-hosted software for the web (currently in development) that provides digital media artists with the ability to create concept and reference boards.
-You can simply drag in images, or paste images you have copied in your clipboard, and then arrange them as you see fit.
+You can simply paste images you have copied in your clipboard, and then arrange them as you see fit.
 
 
 ## Features:
@@ -22,6 +22,7 @@ You can simply drag in images, or paste images you have copied in your clipboard
 * Image resizing on the server
 * Canvas zoom and translate
 * Image paste from clipboard and translate
+* Name and rename boards
 
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)

@@ -9,11 +9,11 @@ export const ThemeLight: TornadoTheme = {
     centerPanel: '#d2d2d2'
   },
   dialog: {
-    background: '#131315',
-    border: '#000',
-    header: '#fff',
-    desc: '#5f5f60',
-    shadow: 'rgba(0,0,0,0.3)'
+    background: '#eaeaea',
+    border: '#b6b6b6',
+    header: '#000000',
+    desc: '#424242',
+    shadow: 'rgba(122,122,122,0.3)'
   },
   text: {
     heading: '#000000',
@@ -34,7 +34,7 @@ export const ThemeLight: TornadoTheme = {
   controls: {
     error: '#ab3838',
     field: {
-      background: '#c4c4c4',
+      background: '#e1e1e1',
       color: '#000000',
       placeholder: '#616162'
     },

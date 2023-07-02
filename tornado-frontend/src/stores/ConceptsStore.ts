@@ -34,8 +34,11 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
     });
   }
 
-  updateBoard(board: ConceptBoard) {
-    this.board = board;
+  async setName(name: string) {
+    this.board.name = name;
+    await this.options.client.updateConcept({
+      board: this.board
+    });
   }
 
   get id() {
@@ -45,8 +48,6 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
   async delete() {
     return this.iterateListenersAsync((cb) => cb.deleted?.());
   }
-
-  async loadData() {}
 }
 
 export class ConceptsStore {
@@ -69,7 +70,7 @@ export class ConceptsStore {
         });
         return board;
       },
-      update: (c, board) => board.updateBoard(c)
+      update: (c, board) => (board.board = c)
     });
   }
 

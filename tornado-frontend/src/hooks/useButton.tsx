@@ -30,6 +30,6 @@ export const useButton = (props: UseButtonOptions, ref: React.RefObject<HTMLDivE
     return () => {
       ref.current?.removeEventListener('click', l);
     };
-  }, []);
+  }, [props.action, props.disabled]);
   return { loading };
 };
