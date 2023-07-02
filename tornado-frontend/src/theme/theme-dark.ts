@@ -7,6 +7,13 @@ export const ThemeDark: TornadoTheme = {
     separatorLine: '#2d2d2f',
     centerPanel: '#121215'
   },
+  dialog: {
+    background: '#131315',
+    border: '#000',
+    header: '#fff',
+    desc: '#5f5f60',
+    shadow: 'rgba(0,0,0,0.3)'
+  },
   text: {
     heading: '#fff',
     description: '#5f5f60'

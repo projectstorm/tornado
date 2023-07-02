@@ -25,6 +25,13 @@ export interface TornadoTheme {
       backgroundHover: string;
     };
   };
+  dialog: {
+    background: string;
+    header: string;
+    desc: string;
+    shadow: string;
+    border: string;
+  };
   text: {
     heading: string;
     description: string;
