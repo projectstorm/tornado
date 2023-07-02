@@ -16,7 +16,7 @@ export const FieldWidget: React.FC<FieldWidgetProps> = (props) => {
       ref={props.forwardRef}
       placeholder={props.placeholder}
       type={props.type}
-      value={props.value?.trim() || ''}
+      value={props.value || ''}
       onChange={(event) => {
         let value = event.target.value;
         if (value.trim() === '') {
