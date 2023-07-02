@@ -21,6 +21,7 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
   const system = useSystem();
   useEffect(() => {
     system.conceptStore.loadConcepts();
+    system.updateTitle('Concepts');
   }, []);
   return (
     <S.Container>
@@ -51,7 +52,21 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
             render: ({ rowHover, row }) => {
               return (
                 <TableRowActionsWidget show={rowHover}>
-                  <ButtonWidget
+                  <S.RowButton
+                    label="Rename"
+                    type={ButtonType.NORMAL}
+                    action={async () => {
+                      const name = await system.dialogStore.showInputDialog({
+                        title: 'Enter a new name',
+                        desc: `You are about to rename concept board ${row.board.board.name}`
+                      });
+                      if (!name) {
+                        return;
+                      }
+                      return row.board.setName(name);
+                    }}
+                  />
+                  <S.RowButton
                     label="Delete"
                     type={ButtonType.NORMAL}
                     action={async () => {
@@ -95,5 +110,13 @@ namespace S {
 
   export const Buttons = styled.div`
     margin-bottom: 5px;
+  `;
+
+  export const RowButton = styled(ButtonWidget)`
+    margin-right: 5px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   `;
 }

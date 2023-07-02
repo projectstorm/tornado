@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useAuthenticated } from '../../hooks/useAuthenticated';
 import { ContentViewWidget } from './widgets/ContentViewWidget';
-import { usePasteMedia } from '../../hooks/usePasteMedia';
 import { useSystem } from '../../hooks/useSystem';
 import { ConceptCanvasWidget } from './widgets/react-canvas/ConceptCanvasWidget';
 import { useParams } from 'react-router-dom';
@@ -21,7 +20,7 @@ export const ConceptBoardPage: React.FC<ConceptBoardPageProps> = observer((props
     return autorun(() => {
       const concept = system.conceptStore.getConcept(parseInt(id));
       if (concept) {
-        concept.loadData();
+        system.updateTitle(`Concept ${concept.board.name}`);
       }
     });
   }, [id]);

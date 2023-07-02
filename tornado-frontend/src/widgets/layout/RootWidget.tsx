@@ -44,6 +44,7 @@ namespace S {
 
   export const Body = styled(BodyWidget)`
     flex-grow: 1;
+    overflow-y: auto;
   `;
 
   export const Layers = styled(LayersWidget)`
