@@ -1,7 +1,7 @@
 ## Tornado (WIP)
 
 [![Build](https://github.com/projectstorm/tornado/actions/workflows/test.yml/badge.svg)](https://github.com/projectstorm/tornado/actions/workflows/test.yml)
-[![Docker](https://img.shields.io/docker/pulls/projectstorm/tornado.svg)](https://hub.docker.com/repository/docker/projectstorm/tornado)
+[![Docker](https://img.shields.io/docker/pulls/projectstorm/tornado.svg)](https://hub.docker.com/r/projectstorm/tornado)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-f9ad00.svg)](https://pnpm.io/)
 
 
@@ -125,6 +125,8 @@ and something like this:
 ## Release
 
 ```pnpm version major/minor/patch && git push --tags origin master``` this will rollup a changelog, create a release and publish to docker with the `latest` tag + semver.
+
+_Note: Pull requests must have the appropriate label (eg 'feature') to be included in the release notes automatically._
 
 ## About
 
