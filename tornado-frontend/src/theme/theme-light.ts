@@ -1,12 +1,12 @@
 import { TornadoTheme } from './theme';
 import { ButtonType } from '../widgets/forms/ButtonWidget';
 
-export const ThemeDark: TornadoTheme = {
-  light: false,
+export const ThemeLight: TornadoTheme = {
+  light: true,
   layout: {
-    background: '#18181b',
-    separatorLine: '#2d2d2f',
-    centerPanel: '#121215'
+    background: '#dcdcdc',
+    separatorLine: '#c4c4c4',
+    centerPanel: '#d2d2d2'
   },
   dialog: {
     background: '#131315',
@@ -16,38 +16,38 @@ export const ThemeDark: TornadoTheme = {
     shadow: 'rgba(0,0,0,0.3)'
   },
   text: {
-    heading: '#fff',
-    description: '#5f5f60'
+    heading: '#000000',
+    description: '#545454'
   },
   table: {
     row: {
       background: 'transparent',
-      backgroundHover: '#212123'
+      backgroundHover: '#c7c7c7'
     }
   },
   editor: {
-    background: '#18181b',
-    stripes: '#202021',
-    selected: '#00ebff',
-    selectedShadow: 'rgba(0,235,255,0.49)'
+    background: '#dcdcdc',
+    stripes: '#d0d0d0',
+    selected: '#ff0026',
+    selectedShadow: 'rgba(255,0,0,0.49)'
   },
   controls: {
     error: '#ab3838',
     field: {
-      background: '#18181b',
-      color: '#ffffff',
+      background: '#c4c4c4',
+      color: '#000000',
       placeholder: '#616162'
     },
     button: {
       [ButtonType.NORMAL]: {
-        background: '#212123',
-        backgroundHover: '#38383c',
+        background: '#b9b9c4',
+        backgroundHover: '#ababb2',
         color: '#ffffff',
         colorHover: '#ffffff'
       },
       [ButtonType.PRIMARY]: {
-        background: '#274a55',
-        backgroundHover: '#1983a6',
+        background: '#79bed3',
+        backgroundHover: '#00c1ff',
         color: '#ffffff',
         colorHover: '#ffffff'
       }

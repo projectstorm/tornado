@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import styled from '@emotion/styled';
 import { ImageElement } from './ImageElementFactory';
 import { ResponseImageWidget } from './ResponseImageWidget';
 import { useForceUpdate } from '../../../../../hooks/useForceUpdate';
+import { styled } from '../../../../../theme/theme';
 
 export interface ImageElementWidgetProps {
   model: ImageElement;
@@ -38,8 +38,8 @@ export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => 
 namespace S {
   export const Container = styled.div<{ selected: boolean }>`
     position: absolute;
-    border: solid 2px ${(p) => (p.selected ? 'cyan' : 'transparent')};
-    ${(p) => (p.selected ? 'box-shadow: 0 0 20px rgba(0, 255, 255, 0.32)' : '')};
+    border: solid 2px ${(p) => (p.selected ? p.theme.editor.selected : 'transparent')};
+    ${(p) => (p.selected ? `box-shadow: 0 0 20px ${p.theme.editor.selectedShadow}` : '')};
     box-sizing: border-box;
     pointer-events: all;
   `;

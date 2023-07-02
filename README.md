@@ -17,8 +17,11 @@ You can simply drag in images, or paste images you have copied in your clipboard
 
 * SPA (Single Page App)
 * Multiple Users
+* Light and dark mode
 * Email + password authentication
 * Image resizing on the server
+* Canvas zoom and translate
+* Image paste from clipboard and translate
 
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)

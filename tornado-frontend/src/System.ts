@@ -3,12 +3,15 @@ import { TornadoClient } from './client/TornadoClient';
 import { TornadoTheme } from './theme/theme';
 import { autorun, makeObservable, observable } from 'mobx';
 import { ThemeDark } from './theme/theme-dark';
+import { ThemeLight } from './theme/theme-light';
 import { ConceptsStore } from './stores/ConceptsStore';
 import { MediaClient } from './client/MediaClient';
 import { LayerStore } from './stores/LayerStore';
 import { DialogStore } from './stores/DialogStore';
 
 export class System {
+  static LIGHT_KEY = 'light_mode';
+
   client: TornadoClient;
   clientMedia: MediaClient;
 
@@ -23,7 +26,11 @@ export class System {
   theme?: TornadoTheme;
 
   constructor() {
-    this.theme = ThemeDark;
+    if (window.localStorage.getItem(System.LIGHT_KEY) === 'true') {
+      this.theme = ThemeLight;
+    } else {
+      this.theme = ThemeDark;
+    }
 
     // clients
     this.client = new TornadoClient({
@@ -51,5 +58,15 @@ export class System {
       }
     });
     makeObservable(this);
+  }
+
+  toggleTheme() {
+    if (this.theme.light) {
+      this.theme = ThemeDark;
+      window.localStorage.setItem(System.LIGHT_KEY, 'false');
+    } else {
+      this.theme = ThemeLight;
+      window.localStorage.setItem(System.LIGHT_KEY, 'true');
+    }
   }
 }
