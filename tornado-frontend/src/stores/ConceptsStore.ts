@@ -19,7 +19,19 @@ export interface ConceptBoardModelOptions {
 
 export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
   @observable
-  board: ConceptBoard;
+  board: ConceptBoard & {
+    data: {
+      layers: {
+        models: {
+          [id: string]: {
+            width: number;
+            height: number;
+            image_id: number;
+          };
+        };
+      }[];
+    };
+  };
 
   constructor(protected options: ConceptBoardModelOptions) {
     super();
@@ -74,8 +86,10 @@ export class ConceptsStore {
     });
   }
 
-  async loadConcept(id: string) {
+  async loadConcept(id: number) {
+    // FIXME be more specific
     await this.loadConcepts();
+    return this._concepts.getValue(id);
   }
 
   async createConcept(name: string) {
