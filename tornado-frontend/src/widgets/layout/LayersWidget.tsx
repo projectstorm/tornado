@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { Layer } from '../../stores/LayerStore';
 import { useSystem } from '../../hooks/useSystem';
+import { observer } from 'mobx-react';
 
 export interface LayersWidgetProps {
   className?: any;
@@ -11,7 +12,7 @@ export const LayerWidget: React.FC<{ layer: Layer; index: number }> = (props) =>
   return <S.Layer index={props.index}>{props.layer.render()}</S.Layer>;
 };
 
-export const LayersWidget: React.FC<LayersWidgetProps> = (props) => {
+export const LayersWidget: React.FC<LayersWidgetProps> = observer((props) => {
   const system = useSystem();
   return (
     <S.Container className={props.className}>
@@ -22,7 +23,7 @@ export const LayersWidget: React.FC<LayersWidgetProps> = (props) => {
       </S.Layers>
     </S.Container>
   );
-};
+});
 namespace S {
   export const Container = styled.div`
     display: flex;

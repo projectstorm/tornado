@@ -54,8 +54,14 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
                   <ButtonWidget
                     label="Delete"
                     type={ButtonType.NORMAL}
-                    action={() => {
-                      return row.board.delete();
+                    action={async () => {
+                      const confirm = await system.dialogStore.showConfirmDialog({
+                        title: 'Are you sure?',
+                        desc: `You are about to delete concept board ${row.board.board.name}`
+                      });
+                      if (confirm) {
+                        return row.board.delete();
+                      }
                     }}
                   />
                 </TableRowActionsWidget>

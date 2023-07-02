@@ -47,6 +47,10 @@ namespace S {
 
   export const Layers = styled(LayersWidget)`
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   `;
 
   export const Global = css`

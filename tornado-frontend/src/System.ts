@@ -6,6 +6,7 @@ import { ThemeDark } from './theme/theme-dark';
 import { ConceptsStore } from './stores/ConceptsStore';
 import { MediaClient } from './client/MediaClient';
 import { LayerStore } from './stores/LayerStore';
+import { DialogStore } from './stores/DialogStore';
 
 export class System {
   client: TornadoClient;
@@ -13,6 +14,7 @@ export class System {
 
   userStore: UserStore;
   layerStore: LayerStore;
+  dialogStore: DialogStore;
 
   @observable
   conceptStore: ConceptsStore;
@@ -23,6 +25,7 @@ export class System {
   constructor() {
     this.theme = ThemeDark;
 
+    // clients
     this.client = new TornadoClient({
       baseURL: window.location.origin
     });
@@ -30,10 +33,14 @@ export class System {
       baseURL: window.location.origin
     });
 
+    // stores
     this.userStore = new UserStore({
       client: this.client
     });
     this.layerStore = new LayerStore();
+    this.dialogStore = new DialogStore({
+      layerStore: this.layerStore
+    });
 
     autorun(() => {
       if (this.userStore.authenticatedUser) {
