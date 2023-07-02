@@ -28,7 +28,7 @@ export class ControlsLayerFactory extends AbstractReactFactory<ControlsLayerMode
     return (
       <>
         {_.map(event.model.getParent().getLayers()[0].getModels(), (m: ImageElement) => {
-          return <ControlsElementWidget model={m} key={m.getID()} />;
+          return <ControlsElementWidget engine={this.engine} model={m} key={m.getID()} />;
         })}
       </>
     );

@@ -62,6 +62,9 @@ importers:
       '@projectstorm/tornado-common':
         specifier: workspace:*
         version: link:../tornado-common
+      cropperjs:
+        specifier: ^1.5.13
+        version: 1.5.13
       formik:
         specifier: ^2.4.1
         version: 2.4.1(react@18.2.0)
@@ -83,6 +86,9 @@ importers:
       react-avatar:
         specifier: ^5.0.3
         version: 5.0.3(@babel/runtime@7.22.5)(core-js-pure@3.31.0)(prop-types@15.8.1)(react@18.2.0)
+      react-cropper:
+        specifier: ^2.3.3
+        version: 2.3.3(react@18.2.0)
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
@@ -1309,6 +1315,10 @@ packages:
       parse-json: 5.2.0
       path-type: 4.0.0
       yaml: 1.10.2
+    dev: false
+
+  /cropperjs@1.5.13:
+    resolution: {integrity: sha512-by7jKAo73y5/Do0K6sxdTKHgndY0NMjG2bEdgeJxycbcmHuCiMXqw8sxy5C5Y5WTOTcDGmbT7Sr5CgKOXR06OA==}
     dev: false
 
   /cross-spawn@7.0.3:
@@ -2603,6 +2613,15 @@ packages:
       is-retina: 1.0.3
       md5: 2.3.0
       prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
+  /react-cropper@2.3.3(react@18.2.0):
+    resolution: {integrity: sha512-zghiEYkUb41kqtu+2jpX2Ntigf+Jj1dF9ew4lAobPzI2adaPE31z0p+5TcWngK6TvmWQUwK3lj4G+NDh1PDQ1w==}
+    peerDependencies:
+      react: '>=17.0.2'
+    dependencies:
+      cropperjs: 1.5.13
       react: 18.2.0
     dev: false
 
