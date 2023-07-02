@@ -10,6 +10,7 @@ export interface BtnTheme {
 }
 
 export interface TornadoTheme {
+  light: boolean;
   layout: {
     background: string;
     separatorLine: string;
@@ -18,6 +19,8 @@ export interface TornadoTheme {
   editor: {
     background: string;
     stripes: string;
+    selected: string;
+    selectedShadow: string;
   };
   table: {
     row: {

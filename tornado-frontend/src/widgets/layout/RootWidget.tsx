@@ -9,16 +9,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { System } from '../../System';
 import { SystemContext } from '../../hooks/useSystem';
 import { LayersWidget } from './LayersWidget';
+import { observer } from 'mobx-react';
 
 export interface RootWidgetProps {
   system: System;
 }
 
-export const RootWidget: React.FC<RootWidgetProps> = (props) => {
+export const RootWidget: React.FC<RootWidgetProps> = observer((props) => {
   return (
     <>
       <Global styles={S.Global} />
-      <ThemeProvider theme={ThemeDark}>
+      <ThemeProvider theme={props.system.theme}>
         <BrowserRouter>
           <SystemContext.Provider value={props.system}>
             <S.Container>
@@ -32,7 +33,7 @@ export const RootWidget: React.FC<RootWidgetProps> = (props) => {
       </ThemeProvider>
     </>
   );
-};
+});
 namespace S {
   export const Container = styled.div`
     background: ${(p) => p.theme.layout.background};
