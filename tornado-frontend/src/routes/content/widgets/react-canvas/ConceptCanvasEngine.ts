@@ -12,6 +12,7 @@ import { ImageLayerFactory } from './image-layer/ImageLayerFactory';
 import { DefaultCanvasState } from './DefaultCanvasState';
 import { CanvasEngineListener } from '@projectstorm/react-canvas-core';
 import { ConceptCanvasModel } from './ConceptCanvasModel';
+import { ControlsLayerFactory } from './controls-layer/ControlsLayerFactory';
 
 export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, ConceptCanvasModel> {
   elementBank: FactoryBank<ImageElementFactory>;
@@ -26,6 +27,8 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
 
     this.getLayerFactories().registerFactory(new SelectionBoxLayerFactory());
     this.getLayerFactories().registerFactory(new ImageLayerFactory());
+    this.getLayerFactories().registerFactory(new ControlsLayerFactory());
+
     this.getStateMachine().pushState(new DefaultCanvasState());
 
     // @ts-ignore

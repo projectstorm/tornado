@@ -10,20 +10,9 @@ export interface ImageElementWidgetProps {
 }
 
 export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => {
-  const forceUpdate = useForceUpdate();
-  useEffect(() => {
-    const l = props.model.registerListener({
-      selectionChanged: () => {
-        forceUpdate();
-      }
-    });
-    return l.deregister;
-  }, []);
-
   return (
     <S.Container
       data-imageid={props.model.getID()}
-      selected={props.model.isSelected()}
       style={{
         left: props.model.getX(),
         top: props.model.getY(),
@@ -36,10 +25,8 @@ export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => 
   );
 };
 namespace S {
-  export const Container = styled.div<{ selected: boolean }>`
+  export const Container = styled.div`
     position: absolute;
-    border: solid 2px ${(p) => (p.selected ? p.theme.editor.selected : 'transparent')};
-    ${(p) => (p.selected ? `box-shadow: 0 0 20px ${p.theme.editor.selectedShadow}` : '')};
     box-sizing: border-box;
     pointer-events: all;
   `;

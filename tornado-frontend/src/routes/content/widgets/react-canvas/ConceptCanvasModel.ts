@@ -5,13 +5,14 @@ import * as _ from 'lodash';
 import { ImageElement } from './image-element/ImageElementFactory';
 import { action } from 'mobx';
 import { FileData } from '@projectstorm/tornado-common';
+import { ControlsLayerModel } from './controls-layer/ControlsLayerFactory';
 
 export class ConceptCanvasModel extends CanvasModel {
   constructor(public model: ConceptBoardModel) {
     super();
 
-    const layer = new ImageLayerModel();
-    this.addLayer(layer);
+    this.addLayer(new ImageLayerModel());
+    this.addLayer(new ControlsLayerModel());
   }
 
   load(engine: CanvasEngine) {
