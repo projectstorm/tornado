@@ -23,9 +23,11 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Canvas zoom and translate
 * Image paste from clipboard and translate
 * Name and rename boards
+* Crop images + the ability to re-crop the original image at any stage
 
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)
+![](./images/screenshot3.png)
 
 
 ## Requirements

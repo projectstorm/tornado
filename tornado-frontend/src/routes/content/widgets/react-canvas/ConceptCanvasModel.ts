@@ -19,6 +19,7 @@ export class ConceptCanvasModel extends CanvasModel {
     if (!this.model.board.data) {
       return;
     }
+    // @ts-ignore
     this.deserializeModel(this.model.board.data, engine);
   }
 

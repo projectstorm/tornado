@@ -8,6 +8,7 @@ import { Routing } from '../../routes/routes';
 import { ConceptBoardPage } from '../../routes/content/ConceptBoardPage';
 import { useSystem } from '../../hooks/useSystem';
 import { motion } from 'framer-motion';
+import { ImageCropPage } from '../../routes/content/ImageCropPage';
 
 export interface BodyWidgetProps {
   className?: any;
@@ -36,6 +37,7 @@ export const BodyWidget: React.FC<BodyWidgetProps> = observer((props) => {
         <Route path="/" element={<Redirect />} />
         <Route path={Routing.CONCEPTS_BOARDS} element={<ConceptBoardsPage />} />
         <Route path={Routing.CONCEPTS_BOARD} element={<ConceptBoardPage />} />
+        <Route path={Routing.CONCEPTS_BOARD_IMAGE_CROP} element={<ImageCropPage />} />
         <Route path={Routing.SIGN_IN} element={<SignInPage />} />
       </Routes>
     </motion.div>

@@ -6,6 +6,7 @@ export enum Routes {
   CONCEPT_DELETE = '/concept/delete',
   CONCEPT_UPDATE = '/concept/update',
   UPLOAD_MEDIA = '/media/upload',
-  GET_MEDIA = '/media/get',
+  MEDIA_GET = '/media/get',
+  MEDIA_CROP = '/media/crop',
   CONCEPT = '/concept'
 }

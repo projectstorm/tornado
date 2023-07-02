@@ -17,7 +17,7 @@ export const ThemeDark: TornadoTheme = {
   },
   text: {
     heading: '#fff',
-    description: '#5f5f60'
+    description: '#757575'
   },
   table: {
     row: {
@@ -40,7 +40,7 @@ export const ThemeDark: TornadoTheme = {
     },
     button: {
       [ButtonType.NORMAL]: {
-        background: '#212123',
+        background: '#343436',
         backgroundHover: '#38383c',
         color: '#ffffff',
         colorHover: '#ffffff'

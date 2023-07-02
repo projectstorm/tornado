@@ -32,7 +32,7 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
           icon="plus"
           action={async () => {
             const board = await system.conceptStore.createConcept('Unknown');
-            navigate(generatePath(Routing.CONCEPTS_BOARD, { id: `${board.id}` }));
+            navigate(generatePath(Routing.CONCEPTS_BOARD, { board: `${board.id}` }));
           }}
         />
       </S.Buttons>
@@ -90,7 +90,7 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
               key: `${c.id}`,
               board: c,
               action: () => {
-                navigate(generatePath(Routing.CONCEPTS_BOARD, { id: `${c.id}` }));
+                navigate(generatePath(Routing.CONCEPTS_BOARD, { board: `${c.id}` }));
               },
               cells: {
                 id: `${c.id}`,

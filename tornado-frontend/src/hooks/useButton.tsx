@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export interface UseButtonOptions {
   action: (event: MouseEvent) => Promise<any>;
   disabled?: boolean;
+  instant?: boolean;
 }
 
 export const useButton = (props: UseButtonOptions, ref: React.RefObject<HTMLDivElement>) => {
@@ -26,9 +27,9 @@ export const useButton = (props: UseButtonOptions, ref: React.RefObject<HTMLDivE
         setLoading(false);
       });
     };
-    ref.current.addEventListener('click', l);
+    ref.current.addEventListener(props.instant ? 'mousedown' : 'click', l, { capture: true });
     return () => {
-      ref.current?.removeEventListener('click', l);
+      ref.current?.removeEventListener(props.instant ? 'mousedown' : 'click', l, { capture: true });
     };
   }, [props.action, props.disabled]);
   return { loading };

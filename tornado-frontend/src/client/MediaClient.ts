@@ -1,4 +1,5 @@
 import { BaseObserver, FileData, GetMediaRequest, MediaSize, Routes } from '@projectstorm/tornado-common';
+import * as _ from 'lodash';
 
 export interface MediaUploadListener {
   progressChanged: (percent: number) => any;
@@ -45,6 +46,14 @@ export class MediaObject {
     this.cache = new Map();
   }
 
+  clearCachesSizes() {
+    _.forEach(MediaSize, (m) => {
+      if (m !== MediaSize.ORIGINAL) {
+        this.cache.delete(m);
+      }
+    });
+  }
+
   async getURL(size: MediaSize) {
     if (!this.cache.has(size)) {
       this.cache.set(
@@ -81,7 +90,7 @@ export class MediaClient {
   }
 
   async getMedia(image: number, size: MediaSize) {
-    const res = await fetch(`${this.options.baseURL}${Routes.GET_MEDIA}`, {
+    const res = await fetch(`${this.options.baseURL}${Routes.MEDIA_GET}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

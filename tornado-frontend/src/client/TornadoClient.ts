@@ -7,6 +7,7 @@ import {
   DeleteConceptsResponse,
   LoginRequest,
   LoginResponse,
+  MediaCropRequest,
   Routes,
   UpdateConceptRequest
 } from '@projectstorm/tornado-common';
@@ -74,4 +75,6 @@ export class TornadoClient {
   deleteConcept = this.createRoute<DeleteConceptsRequest, DeleteConceptsResponse>(Routes.CONCEPT_DELETE);
 
   updateConcept = this.createRoute<UpdateConceptRequest, void>(Routes.CONCEPT_UPDATE);
+
+  mediaCrop = this.createRoute<MediaCropRequest, void>(Routes.MEDIA_CROP);
 }

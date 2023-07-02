@@ -5,14 +5,15 @@ import { ENV } from '../Env';
 import * as path from 'path';
 import { System } from '../System';
 import { User } from '@prisma/client';
-import { MediaSize } from '@projectstorm/tornado-common';
+import { MediaCropRequest, MediaSize } from '@projectstorm/tornado-common';
 import * as crypto from 'crypto';
 
 export class MediaApi extends AbstractApi {
   static SIZES = {
     [MediaSize.SMALL]: 200,
     [MediaSize.MEDIUM]: 500,
-    [MediaSize.LARGE]: 1000
+    [MediaSize.LARGE]: 1000,
+    [MediaSize.X_LARGE]: 2000
   };
 
   constructor(system: System) {
@@ -26,7 +27,50 @@ export class MediaApi extends AbstractApi {
     return crypto.createHash('md5').update(str).digest('hex');
   }
 
-  async getMediaPath(image: number, size: MediaSize) {
+  async cropMedia(req: MediaCropRequest) {
+    this.logger.info(`cropping image ${req.image}`);
+    const file = await fs.promises.readFile(this.getMediaPath(req.image, MediaSize.ORIGINAL));
+    await this.resizeMedia(file, req.image, req);
+  }
+
+  async resizeMedia(file: Buffer, id: number, crop?: { left: number; top: number; width: number; height: number }) {
+    for (let k in MediaApi.SIZES) {
+      const size = MediaApi.SIZES[k];
+      try {
+        this.logger.info(`resizing to ${size}`);
+
+        let s = sharp(file);
+        if (crop) {
+          s = s.extract({
+            top: Math.round(crop.top),
+            left: Math.round(crop.left),
+            width: Math.round(crop.width),
+            height: Math.round(crop.height)
+          });
+        }
+        await s
+          .resize({
+            fit: 'inside',
+            background: {
+              r: 0,
+              g: 0,
+              b: 0,
+              alpha: 0
+            },
+            width: size,
+            height: size
+          })
+          .jpeg({
+            quality: 100
+          })
+          .toFile(path.join(this.resizeDir, `${id}.${size}.jpg`));
+      } catch (ex) {
+        this.logger.error(`failed to resize original to ${size}`, ex);
+      }
+    }
+  }
+
+  getMediaPath(image: number, size: MediaSize) {
     if (size === MediaSize.ORIGINAL) {
       return path.join(this.originalDir, `${image}`);
     }
@@ -56,31 +100,8 @@ export class MediaApi extends AbstractApi {
       });
     }
 
-    // resize
-    for (let k in MediaApi.SIZES) {
-      const size = MediaApi.SIZES[k];
-      try {
-        this.logger.info(`resizing to ${size}`);
-        await sharp(file)
-          .resize({
-            fit: 'inside',
-            background: {
-              r: 0,
-              g: 0,
-              b: 0,
-              alpha: 0
-            },
-            width: size,
-            height: size
-          })
-          .jpeg({
-            quality: 100
-          })
-          .toFile(path.join(this.resizeDir, `${media.id}.${size}.jpg`));
-      } catch (ex) {
-        this.logger.error(`failed to resize original to ${size}`, ex);
-      }
-    }
+    // resize media but dont crop
+    await this.resizeMedia(file, media.id);
     return media;
   }
 

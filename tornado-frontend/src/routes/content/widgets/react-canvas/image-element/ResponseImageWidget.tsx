@@ -28,7 +28,7 @@ export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) =
       } else if (zoom >= 50 && zoom < 120) {
         setSize(MediaSize.LARGE);
       } else {
-        setSize(MediaSize.ORIGINAL);
+        setSize(MediaSize.X_LARGE);
       }
     };
 
