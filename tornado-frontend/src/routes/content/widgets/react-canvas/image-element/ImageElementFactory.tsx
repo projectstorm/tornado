@@ -9,6 +9,8 @@ import {
 import { ImageElementWidget } from './ImageElementWidget';
 import { ImageLayerModel } from '../image-layer/ImageLayerFactory';
 import { FileData } from '@projectstorm/tornado-common';
+import { ConceptCanvasEngine } from '../ConceptCanvasEngine';
+import { Rectangle } from '@projectstorm/geometry';
 
 export class ImageElement extends BasePositionModel {
   public width: number;
@@ -35,6 +37,10 @@ export class ImageElement extends BasePositionModel {
     this.height = (size / data.width) * data.height;
   }
 
+  getBoundingBox(): Rectangle {
+    return Rectangle.fromPointAndSize(this.position, this.width, this.height);
+  }
+
   serialize() {
     return {
       ...super.serialize(),
@@ -53,7 +59,7 @@ export class ImageElement extends BasePositionModel {
   }
 }
 
-export class ImageElementFactory extends AbstractReactFactory<BasePositionModel> {
+export class ImageElementFactory extends AbstractReactFactory<BasePositionModel, ConceptCanvasEngine> {
   static TYPE = 'concept/image';
 
   constructor() {
@@ -65,6 +71,18 @@ export class ImageElementFactory extends AbstractReactFactory<BasePositionModel>
   }
 
   generateReactWidget(event: GenerateWidgetEvent<ImageElement>): JSX.Element {
-    return <ImageElementWidget key={event.model.getID()} model={event.model} />;
+    return (
+      <ImageElementWidget
+        focus={() => {
+          this.engine.zoomToFitElements({
+            margin: 10,
+            elements: [event.model],
+            maxZoom: 2
+          });
+        }}
+        key={event.model.getID()}
+        model={event.model}
+      />
+    );
   }
 }

@@ -24,6 +24,7 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Image paste from clipboard and translate
 * Name and rename boards
 * Crop images + the ability to re-crop the original image at any stage
+* Double click to focus images in the center of the screen
 
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)

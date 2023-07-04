@@ -98,6 +98,9 @@ importers:
       react-switch:
         specifier: ^7.0.0
         version: 7.0.0(react-dom@18.2.0)(react@18.2.0)
+      screenfull:
+        specifier: ^6.0.2
+        version: 6.0.2
       uuid:
         specifier: ^9.0.0
         version: 9.0.0
@@ -2784,6 +2787,11 @@ packages:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
+
+  /screenfull@6.0.2:
+    resolution: {integrity: sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+    dev: false
 
   /semver@5.7.1:
     resolution: {integrity: sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==}

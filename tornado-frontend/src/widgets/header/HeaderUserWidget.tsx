@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { useSystem } from '../../hooks/useSystem';
 import { FONT } from '../../fonts';
@@ -7,14 +8,27 @@ import Avatar from 'react-avatar';
 import { ButtonType, ButtonWidget } from '../forms/ButtonWidget';
 import ReactSwitch from 'react-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import screenfull from 'screenfull';
+import { useForceUpdate } from '../../hooks/useForceUpdate';
 
 export interface HeaderUserWidgetProps {
   className?: any;
+  bodyRef: React.RefObject<HTMLDivElement>;
 }
 
 export const HeaderUserWidget: React.FC<HeaderUserWidgetProps> = observer((props) => {
   const system = useSystem();
+  const forceUpdate = useForceUpdate();
   const user = system.userStore.authenticatedUser;
+  useEffect(() => {
+    const h = () => {
+      forceUpdate();
+    };
+    screenfull.on('change', h);
+    return () => {
+      screenfull.off('change', h);
+    };
+  }, []);
   return (
     <S.Container className={props.className}>
       <S.Switch
@@ -41,6 +55,17 @@ export const HeaderUserWidget: React.FC<HeaderUserWidgetProps> = observer((props
             email={user.email}
             color={system.theme.controls.button.primary.backgroundHover}
             fgColor={system.theme.controls.button.primary.colorHover}
+          />
+          <S.Button
+            type={ButtonType.NORMAL}
+            icon={screenfull.isFullscreen ? 'minimize' : 'expand'}
+            action={async () => {
+              if (screenfull.isFullscreen) {
+                screenfull.exit();
+              } else {
+                screenfull.request(props.bodyRef.current);
+              }
+            }}
           />
           <S.Button
             type={ButtonType.NORMAL}
