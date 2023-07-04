@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { createRef, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
 import { useAuthenticated } from '../../hooks/useAuthenticated';
 import { useSystem } from '../../hooks/useSystem';
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
@@ -11,6 +10,8 @@ import 'cropperjs/dist/cropper.css';
 import { ButtonType, ButtonWidget } from '../../widgets/forms/ButtonWidget';
 import { Routing } from '../routes';
 import * as _ from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { styled } from '../../theme/theme';
 
 export const ImageCropPage: React.FC = observer((props) => {
   const system = useSystem();
@@ -29,7 +30,11 @@ export const ImageCropPage: React.FC = observer((props) => {
   const cropperRef = createRef<ReactCropperElement>();
 
   if (!mediaUrl) {
-    return null;
+    return (
+      <S.Loader>
+        <S.Icon icon="spinner" spin={true} />
+      </S.Loader>
+    );
   }
 
   return (
@@ -58,6 +63,7 @@ export const ImageCropPage: React.FC = observer((props) => {
         <S.Button
           type={ButtonType.PRIMARY}
           label="Crop"
+          icon="crop"
           action={async () => {
             const data = cropperRef.current.cropper.getData();
             await system.client.mediaCrop({
@@ -101,6 +107,19 @@ export const ImageCropPage: React.FC = observer((props) => {
   );
 });
 namespace S {
+  export const Icon = styled(FontAwesomeIcon)`
+    color: ${(p) => p.theme.text.description};
+    font-size: 50px;
+  `;
+
+  export const Loader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  `;
+
   export const Container = styled.div`
     box-sizing: border-box;
     padding: 10px;

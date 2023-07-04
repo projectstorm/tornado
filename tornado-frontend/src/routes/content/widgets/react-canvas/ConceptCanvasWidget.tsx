@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { CanvasWidget } from '@projectstorm/react-canvas-core';
+import { Action, CanvasWidget, InputType } from '@projectstorm/react-canvas-core';
 import { ConceptBoardModel } from '../../../../stores/ConceptsStore';
 import { ConceptCanvasEngine } from './ConceptCanvasEngine';
 import { ConceptCanvasModel } from './ConceptCanvasModel';
@@ -17,19 +17,36 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = (props) =
   const [engine] = useState(() => {
     return new ConceptCanvasEngine();
   });
+  const [position, setPosition] = useState<React.MouseEvent>(null);
 
   usePasteMedia({
     gotMedia: (files) => {
       files.forEach(async (file) => {
         const media = await system.clientMedia.uploadMedia(file);
+        const element = engine.getModel().addImage();
+        if (position) {
+          element.setPosition(engine.getRelativeMousePoint(position));
+        }
+        engine.repaintCanvas();
         media.registerListener({
           finished: (data) => {
-            engine.getModel().addImage(data);
+            element.update(data);
             engine.repaintCanvas();
           }
         });
       });
     }
+  });
+
+  useEffect(() => {
+    return engine.getActionEventBus().registerAction(
+      new Action({
+        type: InputType.MOUSE_DOWN,
+        fire: ({ event }) => {
+          setPosition(event as React.MouseEvent);
+        }
+      })
+    );
   });
 
   useEffect(() => {
