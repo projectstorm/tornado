@@ -15,11 +15,11 @@ export class ConceptCanvasModel extends CanvasModel {
   }
 
   load(engine: CanvasEngine) {
-    if (!this.model.board.data) {
+    if (!this.model.data) {
       return;
     }
     // @ts-ignore
-    this.deserializeModel(this.model.board.data, engine);
+    this.deserializeModel(this.model.data, engine);
   }
 
   @action deserialize(event: DeserializeEvent<this>) {

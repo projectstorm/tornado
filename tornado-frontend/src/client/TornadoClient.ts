@@ -4,11 +4,13 @@ import {
   CreateConceptRequest,
   CreateConceptResponse,
   DeleteConceptsRequest,
-  DeleteConceptsResponse,
+  GetConceptDataRequest,
+  GetConceptDataResponse,
   LoginRequest,
   LoginResponse,
   MediaCropRequest,
   Routes,
+  UpdateConceptDataRequest,
   UpdateConceptRequest
 } from '@projectstorm/tornado-common';
 
@@ -68,13 +70,21 @@ export class TornadoClient {
 
   signOut = this.createRoute(Routes.SIGN_OUT);
 
+  // !------ concepts ------
+
   concepts = this.createRoute<ConceptsRequest, ConceptsResponse>(Routes.CONCEPTS);
 
   createConcept = this.createRoute<CreateConceptRequest, CreateConceptResponse>(Routes.CONCEPT_CREATE);
 
-  deleteConcept = this.createRoute<DeleteConceptsRequest, DeleteConceptsResponse>(Routes.CONCEPT_DELETE);
+  deleteConcept = this.createRoute<DeleteConceptsRequest, void>(Routes.CONCEPT_DELETE);
 
   updateConcept = this.createRoute<UpdateConceptRequest, void>(Routes.CONCEPT_UPDATE);
+
+  getConceptData = this.createRoute<GetConceptDataRequest, GetConceptDataResponse>(Routes.CONCEPT_GET_DATA);
+
+  updateConceptData = this.createRoute<UpdateConceptDataRequest, void>(Routes.CONCEPT_UPDATE_DATA);
+
+  // !----- media -----------
 
   mediaCrop = this.createRoute<MediaCropRequest, void>(Routes.MEDIA_CROP);
 }

@@ -16,7 +16,7 @@ export interface CreateAuthenticatedApi<Req, Res> {
   cb: (event: ApiEvent<Req>) => Promise<Res>;
 }
 
-export const createApiRoute = <Req, Res>(options: CreateAuthenticatedApi<Req, Res>) => {
+export const createApiRoute = <Req, Res = any>(options: CreateAuthenticatedApi<Req, Res>) => {
   options.router.post(options.route, async (req, res) => {
     const user = await options.system.db.user.findFirst({
       where: {

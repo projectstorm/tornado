@@ -76,8 +76,7 @@ export class ImageElementFactory extends AbstractReactFactory<BasePositionModel,
         focus={() => {
           this.engine.zoomToFitElements({
             margin: 10,
-            elements: [event.model],
-            maxZoom: 2
+            elements: [event.model]
           });
         }}
         key={event.model.getID()}

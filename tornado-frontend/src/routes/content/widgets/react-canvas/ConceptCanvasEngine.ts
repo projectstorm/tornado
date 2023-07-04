@@ -57,8 +57,8 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
   /**
    * FIXME this should go back into react-diagrams along with the dependent functions (the CanvasEngine)
    */
-  zoomToFitElements(options: { margin: number; elements: BasePositionModel[]; maxZoom: number }) {
-    const { margin, elements, maxZoom } = options;
+  zoomToFitElements(options: { margin: number; elements: BasePositionModel[] }) {
+    const { margin, elements } = options;
     const nodesRect = this.getBoundingNodesRect(elements);
     // there is something we should zoom on
     let canvasRect = this.canvas.getBoundingClientRect();
@@ -69,9 +69,6 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
       const yFactor = this.canvas.clientHeight / (nodesRect.getHeight() + margin * 2);
 
       let zoomFactor = xFactor < yFactor ? xFactor : yFactor;
-      if (maxZoom && zoomFactor > maxZoom) {
-        zoomFactor = maxZoom;
-      }
 
       return {
         zoom: zoomFactor,

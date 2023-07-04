@@ -14,22 +14,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../theme/theme';
 
 export const ImageCropPage: React.FC = observer((props) => {
-  const system = useSystem();
   useAuthenticated();
+
+  const system = useSystem();
   const navigate = useNavigate();
   const { board, image } = useParams<{ board: string; image: string }>();
-
+  const cropperRef = createRef<ReactCropperElement>();
   const [mediaUrl, setMedia] = useState(null);
+
   useEffect(() => {
     const media = system.clientMedia.getMediaObject(parseInt(image));
     media.getURL(MediaSize.ORIGINAL).then((url) => {
       setMedia(url);
     });
-  }, [board, image]);
+  }, [image]);
 
-  const cropperRef = createRef<ReactCropperElement>();
+  useEffect(() => {
+    system.conceptStore.loadConcept(parseInt(board)).then((c) => {
+      c.getCanvasData();
+    });
+  }, [board]);
 
-  if (!mediaUrl) {
+  const data = system.conceptStore.getConcept(parseInt(board))?.data;
+
+  if (!mediaUrl || !data) {
     return (
       <S.Loader>
         <S.Icon icon="spinner" spin={true} />
@@ -79,12 +87,12 @@ export const ImageCropPage: React.FC = observer((props) => {
 
             // update the image sizes on the board
             const concept = await system.conceptStore.loadConcept(parseInt(board));
-            _.forEach(concept.board.data.layers[0].models, (m) => {
+            _.forEach(concept.data.layers[0].models, (m) => {
               if (m.image_id === parseInt(image)) {
                 m.height = (m.width / data.width) * data.height;
               }
             });
-            await concept.setCanvasData(concept.board.data);
+            await concept.setCanvasData(concept.data);
             navigate(generatePath(Routing.CONCEPTS_BOARD, { board: board }));
           }}
         />

@@ -8,7 +8,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export enum ButtonType {
   PRIMARY = 'primary',
-  NORMAL = 'normal'
+  NORMAL = 'normal',
+  DISCRETE = 'discrete'
 }
 
 export interface ButtonWidgetProps extends UseButtonOptions {
