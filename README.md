@@ -1,11 +1,13 @@
-## Tornado (WIP)
+## Tornado
 
 [![Build](https://github.com/projectstorm/tornado/actions/workflows/test.yml/badge.svg)](https://github.com/projectstorm/tornado/actions/workflows/test.yml)
 [![Docker](https://img.shields.io/docker/pulls/projectstorm/tornado.svg)](https://hub.docker.com/r/projectstorm/tornado)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-f9ad00.svg)](https://pnpm.io/)
 
 
-Concept image-board software for ambitious creatives 🎨
+Concept and image reference board software for ambitious creatives 🎨
+
+(Inspired by the awesome https://www.pureref.com/ ref and https://vizref.com/)
 
 ## What
 
@@ -25,6 +27,7 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Name and rename boards
 * Crop images + the ability to re-crop the original image at any stage
 * Double click to focus images in the center of the screen
+* Fullscreen toggle
 
 ![](./images/screenshot.png)
 ![](./images/screenshot2.png)
