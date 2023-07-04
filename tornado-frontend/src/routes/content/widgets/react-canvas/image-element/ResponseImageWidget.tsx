@@ -5,6 +5,7 @@ import { MediaSize } from '@projectstorm/tornado-common';
 import { ImageElement } from './ImageElementFactory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../../../../theme/theme';
+import { MediaObject } from '../../../../../client/MediaClient';
 
 export interface ResponseImageWidgetProps {
   className?: any;
@@ -13,11 +14,16 @@ export interface ResponseImageWidgetProps {
 
 export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) => {
   const system = useSystem();
-  const [object] = useState(() => {
-    return system.clientMedia.getMediaObject(props.model.imageID);
-  });
+  const [object, setObject] = useState<MediaObject>(null);
   const [url, setUrl] = useState<string>(null);
   const [size, setSize] = useState<MediaSize>();
+
+  useEffect(() => {
+    if (!props.model.imageID) {
+      return;
+    }
+    setObject(system.clientMedia.getMediaObject(props.model.imageID));
+  }, [props.model.imageID]);
 
   useEffect(() => {
     const compute = (zoom: number) => {
@@ -41,10 +47,10 @@ export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) =
   }, []);
 
   useEffect(() => {
-    if (size) {
+    if (object && size) {
       object.getURL(size).then(setUrl);
     }
-  }, [size]);
+  }, [object, size]);
 
   if (!url) {
     return (
@@ -63,17 +69,19 @@ namespace S {
     font-size: 50px;
   `;
 
-  export const Container = styled.div<{ url: string }>`
-    background-image: url('${(p) => p.url}');
-    background-repeat: no-repeat;
-    background-size: contain;
-  `;
-
   export const Loader = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     background: ${(p) => p.theme.editor.stripes};
     border-radius: 5px;
+    width: 100%;
+    height: 100%;
+  `;
+
+  export const Container = styled.div<{ url: string }>`
+    background-image: url('${(p) => p.url}');
+    background-repeat: no-repeat;
+    background-size: contain;
   `;
 }

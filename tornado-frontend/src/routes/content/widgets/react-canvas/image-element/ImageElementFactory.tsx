@@ -8,23 +8,31 @@ import {
 } from '@projectstorm/react-canvas-core';
 import { ImageElementWidget } from './ImageElementWidget';
 import { ImageLayerModel } from '../image-layer/ImageLayerFactory';
+import { FileData } from '@projectstorm/tornado-common';
 
 export class ImageElement extends BasePositionModel {
   public width: number;
   public height: number;
 
-  constructor(public imageID: number) {
+  constructor(public imageID: number = null) {
     super({
       type: ImageElementFactory.TYPE
     });
+    this.width = 200;
+    this.height = 200;
     this.setPosition(100, 100);
     this.setLocked(false);
-    this.width = null;
-    this.height = null;
   }
 
   getCanvasModel() {
     return (this.getParent() as ImageLayerModel).getParent();
+  }
+
+  update(data: FileData) {
+    const size = 500;
+    this.imageID = data.id;
+    this.width = size;
+    this.height = (size / data.width) * data.height;
   }
 
   serialize() {
