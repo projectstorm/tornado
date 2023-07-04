@@ -11,5 +11,8 @@ export const TableRowActionsWidget: React.FC<React.PropsWithChildren<TableRowAct
 namespace S {
   export const Container = styled.div<{ show: boolean }>`
     visibility: ${(p) => (p.show ? 'visible' : 'hidden')};
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
   `;
 }

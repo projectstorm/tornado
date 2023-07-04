@@ -29,9 +29,10 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Double click to focus images in the center of the screen
 * Fullscreen toggle
 
-![](./images/screenshot.png)
+![](./images/screenshot1.png)
 ![](./images/screenshot2.png)
 ![](./images/screenshot3.png)
+![](./images/screenshot4.png)
 
 
 ## Requirements

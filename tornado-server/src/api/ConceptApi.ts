@@ -1,6 +1,7 @@
 import { AbstractApi, ApiError } from './AbstractApi';
 import { System } from '../System';
-import { User } from '@prisma/client';
+import { ConceptBoard, User } from '@prisma/client';
+import { ConceptBoardEncoded } from '@projectstorm/tornado-common';
 
 export class ConceptApi extends AbstractApi {
   constructor(system: System) {
@@ -21,6 +22,15 @@ export class ConceptApi extends AbstractApi {
         }
       }
     });
+  }
+
+  encodeConcept(concept: ConceptBoard): ConceptBoardEncoded {
+    return {
+      id: concept.id,
+      name: concept.name,
+      createdAt: concept.createdAt?.toISOString(),
+      updatedAt: concept.updatedAt?.toISOString()
+    };
   }
 
   async deleteConcept(user: User, id: number) {

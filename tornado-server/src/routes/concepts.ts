@@ -22,7 +22,7 @@ export const setupConceptRoutes = (router: Router, system: System) => {
     cb: async ({ user, data }) => {
       const concept = await system.concepts.createConcept(user, data.name);
       return {
-        concept
+        concept: system.concepts.encodeConcept(concept)
       };
     }
   });
@@ -33,11 +33,6 @@ export const setupConceptRoutes = (router: Router, system: System) => {
     route: Routes.CONCEPTS,
     cb: async ({ user, data }) => {
       const res = await system.db.conceptBoard.findMany({
-        select: {
-          id: true,
-          name: true,
-          createdAt: true
-        },
         where: {
           user: {
             id: user.id
@@ -45,7 +40,9 @@ export const setupConceptRoutes = (router: Router, system: System) => {
         }
       });
       return {
-        concepts: res
+        concepts: res.map((concept) => {
+          return system.concepts.encodeConcept(concept);
+        })
       };
     }
   });
