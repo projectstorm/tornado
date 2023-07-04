@@ -6,8 +6,10 @@ import {
   CreateConceptRequest,
   CreateConceptResponse,
   DeleteConceptsRequest,
-  DeleteConceptsResponse,
+  GetConceptDataRequest,
+  GetConceptDataResponse,
   Routes,
+  UpdateConceptDataRequest,
   UpdateConceptRequest
 } from '@projectstorm/tornado-common';
 import { createApiRoute } from '../routeUtils';
@@ -31,6 +33,11 @@ export const setupConceptRoutes = (router: Router, system: System) => {
     route: Routes.CONCEPTS,
     cb: async ({ user, data }) => {
       const res = await system.db.conceptBoard.findMany({
+        select: {
+          id: true,
+          name: true,
+          createdAt: true
+        },
         where: {
           user: {
             id: user.id
@@ -43,7 +50,7 @@ export const setupConceptRoutes = (router: Router, system: System) => {
     }
   });
 
-  createApiRoute<DeleteConceptsRequest, DeleteConceptsResponse>({
+  createApiRoute<DeleteConceptsRequest>({
     router,
     system,
     route: Routes.CONCEPT_DELETE,
@@ -67,11 +74,43 @@ export const setupConceptRoutes = (router: Router, system: System) => {
           id: data.board.id
         },
         data: {
-          data: data.board.data,
           name: data.board.name
         }
       });
       return {};
+    }
+  });
+
+  createApiRoute<UpdateConceptDataRequest, any>({
+    router,
+    system,
+    route: Routes.CONCEPT_UPDATE_DATA,
+    cb: async ({ user, data }) => {
+      await system.db.conceptBoard.update({
+        where: {
+          id: data.board_id
+        },
+        data: {
+          data: data.data
+        }
+      });
+      return {};
+    }
+  });
+
+  createApiRoute<GetConceptDataRequest, GetConceptDataResponse>({
+    router,
+    system,
+    route: Routes.CONCEPT_GET_DATA,
+    cb: async ({ user, data }) => {
+      const d = await system.db.conceptBoard.findFirst({
+        where: {
+          id: data.board_id
+        }
+      });
+      return {
+        data: d.data
+      };
     }
   });
 };

@@ -58,7 +58,7 @@ export const HeaderUserWidget: React.FC<HeaderUserWidgetProps> = observer((props
           />
           <S.Button
             type={ButtonType.NORMAL}
-            icon={screenfull.isFullscreen ? 'minimize' : 'expand'}
+            icon={screenfull.isFullscreen ? 'minimize' : 'up-right-and-down-left-from-center'}
             action={async () => {
               if (screenfull.isFullscreen) {
                 screenfull.exit();

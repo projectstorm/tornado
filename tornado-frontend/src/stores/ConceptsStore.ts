@@ -1,7 +1,8 @@
 import { TornadoClient } from '../client/TornadoClient';
 import { BaseListener, BaseObserver, ConceptBoard } from '@projectstorm/tornado-common';
 import { Collection } from '../data/Collection';
-import { computed, makeObservable, observable } from 'mobx';
+import { computed, makeObservable, observable, toJS } from 'mobx';
+import { v4 } from 'uuid';
 
 export interface ConceptsStoreOptions {
   client: TornadoClient;
@@ -19,18 +20,20 @@ export interface ConceptBoardModelOptions {
 
 export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
   @observable
-  board: ConceptBoard & {
-    data: {
-      layers: {
-        models: {
-          [id: string]: {
-            width: number;
-            height: number;
-            image_id: number;
-          };
+  board: ConceptBoard;
+
+  @observable
+  data: {
+    cache_id: string;
+    layers: {
+      models: {
+        [id: string]: {
+          width: number;
+          height: number;
+          image_id: number;
         };
-      }[];
-    };
+      };
+    }[];
   };
 
   canvasTranslateCache: {
@@ -41,15 +44,33 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
 
   constructor(protected options: ConceptBoardModelOptions) {
     super();
+    this.data = null;
     this.board = options.board;
     this.canvasTranslateCache = null;
     makeObservable(this);
   }
 
+  async getCanvasData() {
+    const d = await this.options.client.getConceptData({
+      board_id: this.board.id
+    });
+    if (!d.data) {
+      return;
+    }
+    this.data = {
+      ...d.data,
+      cache_id: d.data?.cache_id || v4()
+    };
+  }
+
   async setCanvasData(data: any) {
-    this.board.data = data;
-    await this.options.client.updateConcept({
-      board: this.board
+    this.data = {
+      ...data,
+      cache_id: v4()
+    };
+    await this.options.client.updateConceptData({
+      board_id: this.board.id,
+      data: toJS(this.data)
     });
   }
 

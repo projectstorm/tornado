@@ -1,7 +1,6 @@
 export interface ConceptBoard {
   id: number;
   name: string;
-  data: any;
 }
 
 export interface FileData {
@@ -26,6 +25,21 @@ export interface CreateConceptResponse {
   concept: ConceptBoard;
 }
 
+//! ----- DATA ------
+
+export interface GetConceptDataRequest {
+  board_id: number;
+}
+
+export interface GetConceptDataResponse {
+  data: any;
+}
+
+export interface UpdateConceptDataRequest {
+  board_id: number;
+  data: any;
+}
+
 // !----- UPDATE ----
 
 export interface UpdateConceptRequest {
@@ -37,5 +51,3 @@ export interface UpdateConceptRequest {
 export interface DeleteConceptsRequest {
   board_id: number;
 }
-
-export interface DeleteConceptsResponse {}

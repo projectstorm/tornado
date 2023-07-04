@@ -45,6 +45,12 @@ export const ThemeDark: TornadoTheme = {
         color: '#ffffff',
         colorHover: '#ffffff'
       },
+      [ButtonType.DISCRETE]: {
+        background: 'rgba(52,52,54,0.4)',
+        backgroundHover: '#38383c',
+        color: '#484848',
+        colorHover: '#ffffff'
+      },
       [ButtonType.PRIMARY]: {
         background: '#274a55',
         backgroundHover: '#1983a6',
