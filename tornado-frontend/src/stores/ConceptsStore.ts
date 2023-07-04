@@ -33,9 +33,16 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
     };
   };
 
+  canvasTranslateCache: {
+    offsetX: number;
+    offsetY: number;
+    zoom: number;
+  };
+
   constructor(protected options: ConceptBoardModelOptions) {
     super();
     this.board = options.board;
+    this.canvasTranslateCache = null;
     makeObservable(this);
   }
 

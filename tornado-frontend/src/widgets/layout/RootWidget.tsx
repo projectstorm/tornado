@@ -10,24 +10,26 @@ import { System } from '../../System';
 import { SystemContext } from '../../hooks/useSystem';
 import { LayersWidget } from './LayersWidget';
 import { observer } from 'mobx-react';
+import { useRef } from 'react';
 
 export interface RootWidgetProps {
   system: System;
 }
 
 export const RootWidget: React.FC<RootWidgetProps> = observer((props) => {
+  const bodyRef = useRef<HTMLDivElement>();
   return (
     <>
       <Global styles={S.Global} />
       <ThemeProvider theme={props.system.theme}>
         <BrowserRouter>
           <SystemContext.Provider value={props.system}>
-            <S.Container>
-              <HeaderWidget />
+            <S.Container ref={bodyRef}>
+              <HeaderWidget bodyRef={bodyRef} />
               <S.Body />
               <FooterWidget />
+              <S.Layers />
             </S.Container>
-            <S.Layers />
           </SystemContext.Provider>
         </BrowserRouter>
       </ThemeProvider>

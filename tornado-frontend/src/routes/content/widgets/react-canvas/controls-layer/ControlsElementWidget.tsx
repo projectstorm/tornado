@@ -45,6 +45,12 @@ export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (prop
           icon="crop"
           instant={true}
           action={async () => {
+            const canvasModel = props.model.getCanvasModel();
+            canvasModel.model.canvasTranslateCache = {
+              zoom: canvasModel.getZoomLevel(),
+              offsetX: canvasModel.getOffsetX(),
+              offsetY: canvasModel.getOffsetY()
+            };
             navigate(
               generatePath(Routing.CONCEPTS_BOARD_IMAGE_CROP, {
                 board: `${props.model.getCanvasModel().model.id}`,

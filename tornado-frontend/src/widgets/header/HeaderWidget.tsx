@@ -9,7 +9,9 @@ import { useSystem } from '../../hooks/useSystem';
 const logo_light = require('../../../media/logo-small-light.png');
 const logo_dark = require('../../../media/logo-small-dark.png');
 
-export interface HeaderWidgetProps {}
+export interface HeaderWidgetProps {
+  bodyRef: React.RefObject<HTMLDivElement>;
+}
 
 export const HeaderWidget: React.FC<HeaderWidgetProps> = observer((props) => {
   const navigate = useNavigate();
@@ -23,8 +25,7 @@ export const HeaderWidget: React.FC<HeaderWidgetProps> = observer((props) => {
         }}
         src={system.theme.light ? logo_dark : logo_light}
       ></S.Logo>
-
-      <HeaderUserWidget />
+      <HeaderUserWidget bodyRef={props.bodyRef} />
     </S.Container>
   );
 });

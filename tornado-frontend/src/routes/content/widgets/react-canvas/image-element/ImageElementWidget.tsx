@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { ImageElement } from './ImageElementFactory';
 import { ResponseImageWidget } from './ResponseImageWidget';
-import { useForceUpdate } from '../../../../../hooks/useForceUpdate';
 import { styled } from '../../../../../theme/theme';
 
 export interface ImageElementWidgetProps {
   model: ImageElement;
+  focus: () => any;
 }
 
 export const ImageElementWidget: React.FC<ImageElementWidgetProps> = (props) => {
   return (
     <S.Container
+      onDoubleClick={() => {
+        props.focus?.();
+      }}
       data-imageid={props.model.getID()}
       style={{
         left: props.model.getX(),
