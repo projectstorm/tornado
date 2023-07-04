@@ -7,7 +7,7 @@
 
 Concept and image reference board software for ambitious creatives 🎨
 
-(Inspired by the awesome https://www.pureref.com/ ref and https://vizref.com/)
+(Inspired by the awesome projects https://www.pureref.com/ and https://vizref.com/)
 
 ## What
 
