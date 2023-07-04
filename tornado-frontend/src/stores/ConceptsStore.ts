@@ -1,5 +1,5 @@
 import { TornadoClient } from '../client/TornadoClient';
-import { BaseListener, BaseObserver, ConceptBoard } from '@projectstorm/tornado-common';
+import { BaseListener, BaseObserver, ConceptBoardEncoded } from '@projectstorm/tornado-common';
 import { Collection } from '../data/Collection';
 import { computed, makeObservable, observable, toJS } from 'mobx';
 import { v4 } from 'uuid';
@@ -14,13 +14,13 @@ export interface ConceptBoardModelListener extends BaseListener {
 }
 
 export interface ConceptBoardModelOptions {
-  board: ConceptBoard;
+  board: ConceptBoardEncoded;
   client: TornadoClient;
 }
 
 export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
   @observable
-  board: ConceptBoard;
+  board: ConceptBoardEncoded;
 
   @observable
   data: {
@@ -91,7 +91,7 @@ export class ConceptBoardModel extends BaseObserver<ConceptBoardModelListener> {
 }
 
 export class ConceptsStore {
-  _concepts: Collection<ConceptBoardModel, ConceptBoard>;
+  _concepts: Collection<ConceptBoardModel, ConceptBoardEncoded>;
 
   constructor(protected options: ConceptsStoreOptions) {
     this._concepts = new Collection({

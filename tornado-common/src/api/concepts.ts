@@ -1,6 +1,8 @@
-export interface ConceptBoard {
+export interface ConceptBoardEncoded {
   id: number;
   name: string;
+  updatedAt: string;
+  createdAt: string;
 }
 
 export interface FileData {
@@ -14,15 +16,15 @@ export interface FileData {
 export interface ConceptsRequest {}
 
 export interface ConceptsResponse {
-  concepts: ConceptBoard[];
+  concepts: ConceptBoardEncoded[];
 }
 
 // !----- create ----
 
-export type CreateConceptRequest = Pick<ConceptBoard, 'name'>;
+export type CreateConceptRequest = Pick<ConceptBoardEncoded, 'name'>;
 
 export interface CreateConceptResponse {
-  concept: ConceptBoard;
+  concept: ConceptBoardEncoded;
 }
 
 //! ----- DATA ------
@@ -43,7 +45,7 @@ export interface UpdateConceptDataRequest {
 // !----- UPDATE ----
 
 export interface UpdateConceptRequest {
-  board: ConceptBoard;
+  board: Pick<ConceptBoardEncoded, 'name' | 'id'>;
 }
 
 // !----- delete ----

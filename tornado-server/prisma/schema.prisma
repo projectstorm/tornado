@@ -21,6 +21,7 @@ model User {
 model ConceptBoard {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
   name      String
   user      User     @relation(fields: [userId], references: [id])
   userId    Int

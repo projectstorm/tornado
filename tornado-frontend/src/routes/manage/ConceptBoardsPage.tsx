@@ -10,6 +10,8 @@ import { Routing } from '../routes';
 import { observer } from 'mobx-react';
 import { TableRowActionsWidget } from '../../widgets/table/TableRowActionsWidget';
 import { ConceptBoardModel } from '../../stores/ConceptsStore';
+import { DateTime } from 'luxon';
+import { RelativeDateCellWidget } from '../../widgets/table/RelativeDateCellWidget';
 
 export interface ConceptBoardRow extends TableRow {
   board: ConceptBoardModel;
@@ -47,8 +49,16 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
             label: 'Board name'
           },
           {
+            key: 'updatedAt',
+            label: 'Updated At',
+            render: ({ row }) => {
+              return <RelativeDateCellWidget date={row.board.board.updatedAt} />;
+            }
+          },
+          {
             key: 'actions',
             label: 'Actions',
+            shrink: true,
             render: ({ rowHover, row }) => {
               return (
                 <TableRowActionsWidget show={rowHover}>

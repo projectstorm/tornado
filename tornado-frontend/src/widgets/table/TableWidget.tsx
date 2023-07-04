@@ -18,6 +18,7 @@ export interface TableCellRenderEvent<T extends TableRow> {
 export interface TableColumn<T extends TableRow> {
   key: string;
   label: string;
+  shrink?: boolean;
   render?: (event: TableCellRenderEvent<T>) => React.JSX.Element | string;
 }
 
@@ -33,7 +34,11 @@ export const TableWidget = <T extends TableRow>(props: TableWidgetProps<T>) => {
       <thead>
         <tr>
           {props.columns.map((c) => {
-            return <S.TH key={c.key}>{c.label}</S.TH>;
+            return (
+              <S.TH shrink={c.shrink} key={c.key}>
+                {c.label}
+              </S.TH>
+            );
           })}
         </tr>
       </thead>
@@ -53,13 +58,12 @@ namespace S {
     width: 100%;
   `;
 
-  export const TR = styled.tr``;
-
-  export const TH = styled.th`
+  export const TH = styled.th<{ shrink: boolean }>`
     color: ${(p) => p.theme.text.heading};
     padding: 5px;
     border-bottom: solid 1px ${(p) => p.theme.layout.separatorLine};
     text-align: left;
+    ${(p) => (p.shrink ? `width: 0%` : '')};
     ${FONT}
   `;
 }
