@@ -80,6 +80,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
       engine.getModel().setOffsetY(props.board.canvasTranslateCache.offsetY);
       engine.getModel().setZoomLevel(props.board.canvasTranslateCache.zoom);
     }
+    props.board.canvasTranslateCache = null;
   }, [props.board, ready]);
 
   // paste handler
