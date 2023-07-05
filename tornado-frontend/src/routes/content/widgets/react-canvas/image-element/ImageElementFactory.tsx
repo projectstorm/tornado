@@ -2,6 +2,8 @@ import * as React from 'react';
 import {
   AbstractReactFactory,
   BasePositionModel,
+  BasePositionModelGenerics,
+  BasePositionModelListener,
   DeserializeEvent,
   GenerateModelEvent,
   GenerateWidgetEvent
@@ -12,7 +14,11 @@ import { FileData } from '@projectstorm/tornado-common';
 import { ConceptCanvasEngine } from '../ConceptCanvasEngine';
 import { Rectangle } from '@projectstorm/geometry';
 
-export class ImageElement extends BasePositionModel {
+export interface ImageElementListener extends BasePositionModelListener {
+  sizeUpdated: () => any;
+}
+
+export class ImageElement extends BasePositionModel<BasePositionModelGenerics & { LISTENER: ImageElementListener }> {
   public width: number;
   public height: number;
 
@@ -30,11 +36,16 @@ export class ImageElement extends BasePositionModel {
     return (this.getParent() as ImageLayerModel).getParent();
   }
 
+  setSize(width: number, height: number) {
+    this.width = width;
+    this.height = height;
+    this.fireEvent({}, 'sizeUpdated');
+  }
+
   update(data: FileData) {
     const size = 500;
     this.imageID = data.id;
-    this.width = size;
-    this.height = (size / data.width) * data.height;
+    this.setSize(size, (size / data.width) * data.height);
   }
 
   getBoundingBox(): Rectangle {

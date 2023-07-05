@@ -35,10 +35,10 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
     }
   }, []);
 
-  const zoomToFix = useCallback(() => {
+  const zoomToFit = useCallback(() => {
     engine.zoomToFitElements({
       elements: _.values(engine.getModel().getLayers()[0].getModels()) as unknown as ImageElement[],
-      margin: 10
+      margin: 0
     });
   }, []);
 
@@ -74,7 +74,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
       return;
     }
     if (!props.board.canvasTranslateCache) {
-      zoomToFix();
+      zoomToFit();
     } else {
       engine.getModel().setOffsetX(props.board.canvasTranslateCache.offsetX);
       engine.getModel().setOffsetY(props.board.canvasTranslateCache.offsetY);
@@ -97,6 +97,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
           finished: (data) => {
             element.update(data);
             engine.repaintCanvas();
+            engine.getModel().save();
           }
         });
       });
@@ -131,7 +132,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
           type={ButtonType.DISCRETE}
           icon="expand"
           action={async () => {
-            zoomToFix();
+            zoomToFit();
           }}
         />
       </S.Controls>
