@@ -44,10 +44,10 @@ export class DefaultCanvasState extends State<CanvasEngine> {
           }
 
           // the canvas was clicked on, transition to the dragging canvas state
-          if (!element) {
+          if (!element || event.event.button === 1) {
             this.transitionWithEvent(this.dragCanvas, event);
           }
-          // move the items (and potentially link points)
+          // move the items
           else {
             this.transitionWithEvent(this.dragItems, event);
           }
