@@ -1,12 +1,12 @@
 import * as React from 'react';
-import * as _ from 'lodash';
 import { useEffect, useState } from 'react';
+import * as _ from 'lodash';
 import { useSystem } from '../../../../../hooks/useSystem';
 import { MEDIA_SIZES, MediaSize } from '@projectstorm/tornado-common';
 import { ImageElement } from './ImageElementFactory';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../../../../theme/theme';
 import { MediaObject } from '../../../../../client/MediaClient';
+import { keyframes } from '@emotion/react';
 
 export interface ResponseImageWidgetProps {
   className?: any;
@@ -77,23 +77,23 @@ export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) =
   }, [object, size]);
 
   if (!url) {
-    return (
-      <S.Loader className={props.className}>
-        <S.Icon icon="spinner" spin={true} />
-      </S.Loader>
-    );
+    return <S.Loader delay={Math.round(Math.random() * 300)} className={props.className}></S.Loader>;
   }
 
   return <S.Container className={props.className} url={url}></S.Container>;
 };
 
 namespace S {
-  export const Icon = styled(FontAwesomeIcon)`
-    color: ${(p) => p.theme.text.description};
-    font-size: 50px;
+  export const Animated = keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   `;
 
-  export const Loader = styled.div`
+  export const Loader = styled.div<{ delay: number }>`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,6 +101,8 @@ namespace S {
     border-radius: 5px;
     width: 100%;
     height: 100%;
+    animation: ${Animated} 1s infinite alternate-reverse;
+    animation-delay: ${(p) => p.delay}ms;
   `;
 
   export const Container = styled.div<{ url: string }>`
