@@ -1,9 +1,9 @@
 export enum MediaSize {
-  SMALL = 0,
-  MEDIUM = 1,
-  LARGE = 2,
-  X_LARGE = 3,
-  ORIGINAL = 4
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
+  X_LARGE = 'x_large',
+  ORIGINAL = 'original'
 }
 
 export const MEDIA_SIZES = {
