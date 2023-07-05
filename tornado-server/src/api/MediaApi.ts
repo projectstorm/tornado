@@ -5,17 +5,10 @@ import { ENV } from '../Env';
 import * as path from 'path';
 import { System } from '../System';
 import { User } from '@prisma/client';
-import { MediaCropRequest, MediaSize } from '@projectstorm/tornado-common';
+import { MediaCropRequest, MediaSize, MEDIA_SIZES } from '@projectstorm/tornado-common';
 import * as crypto from 'crypto';
 
 export class MediaApi extends AbstractApi {
-  static SIZES = {
-    [MediaSize.SMALL]: 200,
-    [MediaSize.MEDIUM]: 500,
-    [MediaSize.LARGE]: 1000,
-    [MediaSize.X_LARGE]: 2000
-  };
-
   constructor(system: System) {
     super({
       name: 'MEDIA',
@@ -34,8 +27,8 @@ export class MediaApi extends AbstractApi {
   }
 
   async resizeMedia(file: Buffer, id: number, crop?: { left: number; top: number; width: number; height: number }) {
-    for (let k in MediaApi.SIZES) {
-      const size = MediaApi.SIZES[k];
+    for (let k in MEDIA_SIZES) {
+      const size = MEDIA_SIZES[k];
       try {
         this.logger.info(`resizing to ${size}`);
 
@@ -74,7 +67,7 @@ export class MediaApi extends AbstractApi {
     if (size === MediaSize.ORIGINAL) {
       return path.join(this.originalDir, `${image}`);
     }
-    return path.join(this.resizeDir, `${image}.${MediaApi.SIZES[size]}.jpg`);
+    return path.join(this.resizeDir, `${image}.${MEDIA_SIZES[size]}.jpg`);
   }
 
   async uploadFile(user: User, file: Buffer) {

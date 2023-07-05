@@ -1,7 +1,8 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import { useEffect, useState } from 'react';
 import { useSystem } from '../../../../../hooks/useSystem';
-import { MediaSize } from '@projectstorm/tornado-common';
+import { MEDIA_SIZES, MediaSize } from '@projectstorm/tornado-common';
 import { ImageElement } from './ImageElementFactory';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../../../../theme/theme';
@@ -26,24 +27,47 @@ export const ResponseImageWidget: React.FC<ResponseImageWidgetProps> = (props) =
   }, [props.model.imageID]);
 
   useEffect(() => {
-    const compute = (zoom: number) => {
-      if (zoom < 15) {
-        setSize(MediaSize.SMALL);
-      } else if (zoom >= 15 && zoom < 50) {
-        setSize(MediaSize.MEDIUM);
-      } else if (zoom >= 50 && zoom < 120) {
-        setSize(MediaSize.LARGE);
-      } else {
-        setSize(MediaSize.X_LARGE);
+    const compute = () => {
+      const zoom = props.model.getCanvasModel().getZoomLevel() / 100;
+      const width = zoom * props.model.width * window.devicePixelRatio;
+      const height = zoom * props.model.height * window.devicePixelRatio;
+
+      // this is the final value we need to check
+      const length = Math.max(width, height);
+
+      const keys = _.keys(MEDIA_SIZES) as unknown as MediaSize[];
+
+      if (length < MEDIA_SIZES[keys[0]]) {
+        return setSize(keys[0]);
       }
+
+      for (let i = 1; i < keys.length; i++) {
+        if (length >= MEDIA_SIZES[keys[i - 1]] && length < MEDIA_SIZES[keys[i]]) {
+          return setSize(keys[i]);
+        }
+      }
+
+      setSize(MediaSize.X_LARGE);
     };
 
-    compute(props.model.getCanvasModel().getZoomLevel());
-    return props.model.getCanvasModel().registerListener({
+    compute();
+
+    const l1 = props.model.getCanvasModel().registerListener({
       zoomUpdated(event) {
-        compute(event.zoom);
+        compute();
       }
     }).deregister;
+
+    const l2 = props.model.registerListener({
+      sizeUpdated: () => {
+        compute();
+      }
+    }).deregister;
+
+    return () => {
+      l1?.();
+      l2?.();
+    };
   }, []);
 
   useEffect(() => {

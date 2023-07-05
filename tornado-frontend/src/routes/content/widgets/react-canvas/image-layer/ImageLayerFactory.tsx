@@ -67,6 +67,9 @@ export class ImageLayerModel extends LayerModel<ImageLayerGenerics> {
           positionChanged: () => {
             this.save();
           },
+          sizeUpdated: () => {
+            this.save();
+          },
           entityRemoved: () => {
             this.removeModel(model);
             this.save();

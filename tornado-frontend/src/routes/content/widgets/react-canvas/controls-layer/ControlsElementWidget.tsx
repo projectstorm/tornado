@@ -12,6 +12,15 @@ export interface ControlsElementWidgetProps {
   engine: CanvasEngine;
 }
 
+export enum CornerPosition {
+  NW = 'nw',
+  NE = 'ne',
+  SW = 'sw',
+  SE = 'se'
+}
+
+const ANCHOR_SIZE = 14;
+
 export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (props) => {
   const canvas = (props.model.getParent() as ImageLayerModel).getParent();
   const zoom = canvas.getZoomLevel() / 100;
@@ -20,6 +29,8 @@ export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (prop
   if (!props.model.isSelected()) {
     return null;
   }
+
+  const offset = (-1 * ANCHOR_SIZE) / 2;
 
   return (
     <S.Container
@@ -32,7 +43,7 @@ export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (prop
     >
       <S.Controls>
         <S.Button
-          type={ButtonType.NORMAL}
+          type={ButtonType.DISCRETE}
           icon="trash"
           instant={true}
           action={async () => {
@@ -41,7 +52,7 @@ export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (prop
           }}
         />
         <S.Button
-          type={ButtonType.NORMAL}
+          type={ButtonType.DISCRETE}
           icon="crop"
           instant={true}
           action={async () => {
@@ -60,6 +71,42 @@ export const ControlsElementWidget: React.FC<ControlsElementWidgetProps> = (prop
           }}
         />
       </S.Controls>
+      <S.Anchor
+        data-anchorposition={CornerPosition.NW}
+        data-imageid={props.model.getID()}
+        style={{
+          top: offset,
+          left: offset,
+          cursor: 'nw-resize'
+        }}
+      />
+      <S.Anchor
+        data-anchorposition={CornerPosition.NE}
+        data-imageid={props.model.getID()}
+        style={{
+          top: offset,
+          right: offset,
+          cursor: 'ne-resize'
+        }}
+      />
+      <S.Anchor
+        data-anchorposition={CornerPosition.SE}
+        data-imageid={props.model.getID()}
+        style={{
+          bottom: offset,
+          right: offset,
+          cursor: 'se-resize'
+        }}
+      />
+      <S.Anchor
+        data-anchorposition={CornerPosition.SW}
+        data-imageid={props.model.getID()}
+        style={{
+          bottom: offset,
+          left: offset,
+          cursor: 'sw-resize'
+        }}
+      />
     </S.Container>
   );
 };
@@ -70,6 +117,16 @@ namespace S {
     box-shadow: 0 0 20px ${(p) => p.theme.editor.selectedShadow};
     box-sizing: border-box;
     pointer-events: none;
+  `;
+
+  export const Anchor = styled.div`
+    box-sizing: border-box;
+    position: absolute;
+    border: solid 2px ${(p) => p.theme.editor.selected};
+    width: ${ANCHOR_SIZE}px;
+    height: ${ANCHOR_SIZE}px;
+    background: ${(p) => p.theme.editor.selectedShadow};
+    pointer-events: all;
   `;
 
   export const Controls = styled.div`

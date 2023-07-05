@@ -97,6 +97,7 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
           finished: (data) => {
             element.update(data);
             engine.repaintCanvas();
+            engine.getModel().save();
           }
         });
       });
