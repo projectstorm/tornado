@@ -63,13 +63,17 @@ namespace S {
       padding: 0;
     }
 
+    html {
+      overflow: hidden;
+    }
+
     html,
     body,
     #application {
       height: 100%;
       width: 100%;
-      overflow: auto;
       overscroll-behavior-y: none;
+      position: fixed;
     }
   `;
 }

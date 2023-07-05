@@ -48,6 +48,7 @@ export const setupAuthRoutes = (router: Router, system: System) => {
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     })
   );
+
   router.use(passport.initialize());
   router.use(passport.session());
 

@@ -1,5 +1,6 @@
 import { BaseObserver, FileData, GetMediaRequest, MediaSize, Routes } from '@projectstorm/tornado-common';
 import * as _ from 'lodash';
+import { ENV } from '../Env';
 
 export interface MediaUploadListener {
   progressChanged: (percent: number) => any;
@@ -100,6 +101,12 @@ export class MediaClient {
         size: size
       } as GetMediaRequest)
     });
+
+    if (res.status == 403) {
+      window.location.replace(ENV.site_url);
+      return null;
+    }
+
     return await res.blob();
   }
 }

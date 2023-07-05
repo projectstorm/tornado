@@ -13,6 +13,7 @@ import {
   UpdateConceptDataRequest,
   UpdateConceptRequest
 } from '@projectstorm/tornado-common';
+import { ENV } from '../Env';
 
 export interface TornadoClientOptions {
   baseURL: string;
@@ -46,6 +47,10 @@ export class TornadoClient {
       credentials: 'same-origin',
       headers: headers
     });
+    if (res.status == 403) {
+      window.location.replace(ENV.site_url);
+      return null;
+    }
     if (!res.ok) {
       throw new TornadoClientError(res);
     }

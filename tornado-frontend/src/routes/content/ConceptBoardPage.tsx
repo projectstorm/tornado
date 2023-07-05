@@ -9,16 +9,16 @@ import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
 export const ConceptBoardPage: React.FC = observer((props) => {
+  useAuthenticated();
   const system = useSystem();
   const { board } = useParams<{ board: string }>();
-  useAuthenticated();
   useEffect(() => {
-    system.conceptStore.loadConcept(parseInt(board)).then((concept) => {
+    system.conceptStore?.loadConcept(parseInt(board)).then((concept) => {
       system.updateTitle(`Concept ${concept.board.name}`);
     });
   }, [board]);
 
-  const concept = system.conceptStore.getConcept(parseInt(board));
+  const concept = system.conceptStore?.getConcept(parseInt(board));
   if (!concept) {
     return null;
   }

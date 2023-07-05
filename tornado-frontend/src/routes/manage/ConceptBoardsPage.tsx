@@ -10,7 +10,6 @@ import { Routing } from '../routes';
 import { observer } from 'mobx-react';
 import { TableRowActionsWidget } from '../../widgets/table/TableRowActionsWidget';
 import { ConceptBoardModel } from '../../stores/ConceptsStore';
-import { DateTime } from 'luxon';
 import { RelativeDateCellWidget } from '../../widgets/table/RelativeDateCellWidget';
 
 export interface ConceptBoardRow extends TableRow {

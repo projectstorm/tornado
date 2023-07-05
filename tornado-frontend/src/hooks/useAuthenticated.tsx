@@ -7,6 +7,9 @@ export const useAuthenticated = () => {
   const system = useSystem();
   const navigate = useNavigate();
   useEffect(() => {
+    if (!system.userStore.authenticatedUser) {
+      navigate('/sign-in');
+    }
     return autorun(() => {
       if (!system.userStore.authenticatedUser) {
         navigate('/sign-in');

@@ -38,6 +38,7 @@ namespace S {
     border-radius: 3px;
     user-select: none;
     display: inline-flex;
+    align-items: center;
     padding: 5px 10px;
     padding-right: 0;
     background: ${(p) => p.theme.controls.button[p.type].background};
