@@ -41,7 +41,7 @@ export const ThemeDark: TornadoTheme = {
     button: {
       [ButtonType.NORMAL]: {
         background: '#343436',
-        backgroundHover: '#38383c',
+        backgroundHover: '#48484d',
         color: '#ffffff',
         colorHover: '#ffffff'
       },

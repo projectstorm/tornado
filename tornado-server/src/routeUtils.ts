@@ -18,6 +18,11 @@ export interface CreateAuthenticatedApi<Req, Res> {
 
 export const createApiRoute = <Req, Res = any>(options: CreateAuthenticatedApi<Req, Res>) => {
   options.router.post(options.route, async (req, res) => {
+    if (!req.isAuthenticated()) {
+      res.status(403);
+      res.end();
+      return;
+    }
     const user = await options.system.db.user.findFirst({
       where: {
         id: req.user.id

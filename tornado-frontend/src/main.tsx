@@ -16,3 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const system = new System();
   root.render(<RootWidget system={system} />);
 });
+
+document.addEventListener('gesturestart', (e) => {
+  e.preventDefault();
+});
