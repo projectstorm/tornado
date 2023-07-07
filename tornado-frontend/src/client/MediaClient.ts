@@ -59,7 +59,15 @@ export class MediaObject {
     if (!this.cache.has(size)) {
       this.cache.set(
         size,
-        this.client.getMedia(this.id, size).then((data) => window.URL.createObjectURL(data))
+        this.client.getMedia(this.id, size).then(
+          (data) =>
+            new Promise((resolve) => {
+              const url = window.URL.createObjectURL(data);
+              const img = document.createElement('img');
+              img.src = url;
+              resolve(url);
+            })
+        )
       );
     }
     return this.cache.get(size);

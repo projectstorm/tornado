@@ -3,19 +3,20 @@ import {
   BaseModel,
   BasePositionModel,
   CanvasEngine,
+  CanvasEngineListener,
   CanvasModel,
   FactoryBank,
+  InputType,
   SelectionBoxLayerFactory,
   Toolkit
 } from '@projectstorm/react-canvas-core';
-import * as _ from 'lodash';
 import { ImageElementFactory } from './image-element/ImageElementFactory';
 import { ImageLayerFactory } from './image-layer/ImageLayerFactory';
 import { DefaultCanvasState } from './DefaultCanvasState';
-import { CanvasEngineListener } from '@projectstorm/react-canvas-core';
 import { ConceptCanvasModel } from './ConceptCanvasModel';
 import { ControlsLayerFactory } from './controls-layer/ControlsLayerFactory';
 import { boundingBoxFromPolygons, Rectangle } from '@projectstorm/geometry';
+import { CustomZoomAction } from './CustomZoomAction';
 
 export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, ConceptCanvasModel> {
   elementBank: FactoryBank<ImageElementFactory>;
@@ -33,6 +34,14 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
     this.getLayerFactories().registerFactory(new ControlsLayerFactory());
 
     this.getStateMachine().pushState(new DefaultCanvasState());
+
+    this.getActionEventBus()
+      .getActionsForType(InputType.MOUSE_WHEEL)
+      .forEach((m) => {
+        this.getActionEventBus().deregisterAction(m);
+      });
+
+    this.getActionEventBus().registerAction(new CustomZoomAction());
 
     // @ts-ignore
     this.setModel(new CanvasModel());

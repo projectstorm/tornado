@@ -117,8 +117,11 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
           type={ButtonType.DISCRETE}
           icon="magnifying-glass-minus"
           action={async () => {
-            engine.getModel().setZoomLevel(engine.getModel().getZoomLevel() - 20);
-            engine.repaintCanvas();
+            const zoom = engine.getModel().getZoomLevel() - 20;
+            if (zoom > 0) {
+              engine.getModel().setZoomLevel(zoom);
+              engine.repaintCanvas();
+            }
           }}
         />
         <S.Button
