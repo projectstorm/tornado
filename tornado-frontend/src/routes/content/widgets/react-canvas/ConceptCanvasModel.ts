@@ -22,6 +22,12 @@ export class ConceptCanvasModel extends CanvasModel {
     this.deserializeModel(this.model.data, engine);
   }
 
+  getImageElements(): ImageElement[] {
+    return _.values((this.getLayers()[0] as ImageLayerModel).getModels()).filter(
+      (e) => e instanceof ImageElement
+    ) as ImageElement[];
+  }
+
   @action deserialize(event: DeserializeEvent<this>) {
     this.layers = [];
     super.deserialize(event);
