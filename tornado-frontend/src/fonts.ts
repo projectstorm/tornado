@@ -3,6 +3,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCrop,
   faExpand,
+  faLock,
+  faLockOpen,
   faMagnifyingGlassMinus,
   faMagnifyingGlassPlus,
   faMinimize,
@@ -28,7 +30,9 @@ library.add(
   faMinimize,
   faUpRightAndDownLeftFromCenter,
   faMagnifyingGlassPlus,
-  faMagnifyingGlassMinus
+  faMagnifyingGlassMinus,
+  faLock,
+  faLockOpen
 );
 
 export const FONT = css`

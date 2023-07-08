@@ -43,7 +43,19 @@ export class ImageElement extends BasePositionModel<BasePositionModelGenerics & 
   }
 
   update(data: FileData) {
-    const size = 500;
+    // figure out the average sizes are of the other elements for when we paste
+    let widths = this.getCanvasModel()
+      .getImageElements()
+      .filter((i) => i !== this)
+      .map((i) => i.width);
+
+    if (widths.length === 0) {
+      widths = [500];
+    }
+
+    let totalWidth = widths.reduce((prev, cur) => prev + cur, 0);
+
+    const size = totalWidth / widths.length;
     this.imageID = data.id;
     this.setSize(size, (size / data.width) * data.height);
   }

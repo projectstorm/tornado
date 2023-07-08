@@ -63,9 +63,17 @@ export class MediaObject {
           (data) =>
             new Promise((resolve) => {
               const url = window.URL.createObjectURL(data);
+
+              // this wacky code sort-of hydrates the rendering buffer
+              // which greatly reduces initial flickering of the Image blob for the first time
+              // it is rendered in the DOM
               const img = document.createElement('img');
               img.src = url;
-              resolve(url);
+
+              // this kind of also helps a bit
+              _.defer(() => {
+                resolve(url);
+              });
             })
         )
       );

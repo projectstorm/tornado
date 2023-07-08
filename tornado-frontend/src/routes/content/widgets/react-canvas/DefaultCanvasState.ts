@@ -13,12 +13,16 @@ import { ResizeElementState } from './ResizeElementState';
 import { CornerPosition } from './controls-layer/ControlsElementWidget';
 import { ImageElement } from './image-element/ImageElementFactory';
 
+export interface DefaultCanvasStateOptions {
+  isLocked: () => boolean;
+}
+
 export class DefaultCanvasState extends State<CanvasEngine> {
   dragCanvas: DragCanvasState;
   resizeElement: ResizeElementState;
   dragItems: MoveItemsState;
 
-  constructor() {
+  constructor(options: DefaultCanvasStateOptions) {
     super({
       name: 'default-diagrams'
     });
@@ -32,8 +36,13 @@ export class DefaultCanvasState extends State<CanvasEngine> {
       new Action({
         type: InputType.MOUSE_DOWN,
         fire: (event: ActionEvent<MouseEvent>) => {
-          const element = this.engine.getActionEventBus().getModelForEvent(event);
+          const locked = options.isLocked();
+          if (locked) {
+            this.transitionWithEvent(this.dragCanvas, event);
+            return;
+          }
 
+          const element = this.engine.getActionEventBus().getModelForEvent(event);
           if ((event.event.target as HTMLDivElement).dataset.anchorposition) {
             this.resizeElement.setup(
               (event.event.target as HTMLDivElement).dataset.anchorposition as CornerPosition,

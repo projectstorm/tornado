@@ -12,6 +12,7 @@ import { Routing } from '../routes';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../theme/theme';
+import { useTitle } from '../../hooks/useTitle';
 
 export const ImageCropPage: React.FC = observer((props) => {
   useAuthenticated();
@@ -21,6 +22,14 @@ export const ImageCropPage: React.FC = observer((props) => {
   const { board, image } = useParams<{ board: string; image: string }>();
   const cropperRef = createRef<ReactCropperElement>();
   const [mediaUrl, setMedia] = useState(null);
+
+  useTitle(() => {
+    const concept = system.conceptStore?.getConcept(parseInt(board));
+    if (!concept) {
+      return 'Loading...';
+    }
+    return `${concept.board.name} - Crop image: ${image}`;
+  });
 
   useEffect(() => {
     const media = system.clientMedia.getMediaObject(parseInt(image));
@@ -150,5 +159,6 @@ namespace S {
     height: 100%;
     width: 100%;
     flex-grow: 1;
+    overflow: hidden;
   `;
 }
