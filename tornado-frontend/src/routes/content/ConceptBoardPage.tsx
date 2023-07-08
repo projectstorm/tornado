@@ -7,16 +7,24 @@ import { useSystem } from '../../hooks/useSystem';
 import { ConceptCanvasWidget } from './widgets/react-canvas/ConceptCanvasWidget';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react';
+import { useTitle } from '../../hooks/useTitle';
 
 export const ConceptBoardPage: React.FC = observer((props) => {
   useAuthenticated();
   const system = useSystem();
   const { board } = useParams<{ board: string }>();
+
   useEffect(() => {
-    system.conceptStore?.loadConcept(parseInt(board)).then((concept) => {
-      system.updateTitle(`Concept ${concept.board.name}`);
-    });
+    system.conceptStore?.loadConcept(parseInt(board));
   }, [board]);
+
+  useTitle(() => {
+    const concept = system.conceptStore?.getConcept(parseInt(board));
+    if (!concept) {
+      return 'Loading...';
+    }
+    return `${concept.board.name}`;
+  });
 
   const concept = system.conceptStore?.getConcept(parseInt(board));
   if (!concept) {

@@ -25,7 +25,12 @@ export class System {
   @observable
   theme?: TornadoTheme;
 
+  @observable
+  title: string;
+
   constructor() {
+    this.title = null;
+
     if (window.localStorage.getItem(System.LIGHT_KEY) === 'true') {
       this.theme = ThemeLight;
     } else {
@@ -61,6 +66,7 @@ export class System {
   }
 
   updateTitle(title: string) {
+    this.title = title;
     document.title = `Tornado${title ? ` | ${title}` : ''}`;
   }
 

@@ -9,6 +9,9 @@ Concept and image reference board software for ambitious creatives 🎨
 
 (Inspired by the awesome projects https://www.pureref.com/ and https://vizref.com/)
 
+![](./images/example1.png)
+![](./images/example2.png)
+
 ## What
 
 Tornado is self-hosted software for the web (currently in development) that provides digital media artists with the ability to create concept and reference boards.
@@ -21,7 +24,8 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Multiple Users
 * Light and dark mode
 * Email + password authentication
-* Image resizing on the server
+* Image resizing on the server (4 sizes based on the image zoom)
+* Uses window DPI to determine which image variant to serve
 * Canvas zoom and translate
 * Image paste from clipboard and translate
 * Name and rename boards
@@ -29,6 +33,8 @@ You can simply paste images you have copied in your clipboard, and then arrange 
 * Double click to focus images in the center of the screen
 * Fullscreen toggle
 * Resize images on any corner
+* Initial widths are computed based on the average sizes of the other images
+* Lock mode to prevent editing, auto unlock on image paste
 
 ![](./images/screenshot1.png)
 ![](./images/screenshot2.png)
@@ -139,5 +145,20 @@ _Note: Pull requests must have the appropriate label (eg 'feature') to be includ
 
 ## About
 
-Author: Dylan Vorster (dylanvorster.com)
+Project Author: Dylan Vorster (dylanvorster.com)
 
+Links to a few of the awesome artists featured in the example images:
+
+* https://twitter.com/KilluKaela
+* https://twitter.com/IndigoBeatss
+* https://twitter.com/the_aftrmrkt
+* https://twitter.com/Xezeno1
+* https://twitter.com/for_riner
+* https://twitter.com/fwflunky
+* https://twitter.com/Dev_Voxy
+* https://twitter.com/_rat_riot
+* https://twitter.com/Frayvuir
+* https://twitter.com/DJayjesse
+* https://twitter.com/bl_s21
+* https://twitter.com/yumesan_yume
+* https://twitter.com/MegamanUMX

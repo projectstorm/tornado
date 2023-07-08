@@ -18,10 +18,14 @@ import { ControlsLayerFactory } from './controls-layer/ControlsLayerFactory';
 import { boundingBoxFromPolygons, Rectangle } from '@projectstorm/geometry';
 import { CustomZoomAction } from './CustomZoomAction';
 
+export interface ConceptCanvasEngineOptions {
+  isLocked: () => boolean;
+}
+
 export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, ConceptCanvasModel> {
   elementBank: FactoryBank<ImageElementFactory>;
 
-  constructor() {
+  constructor(options: ConceptCanvasEngineOptions) {
     super({
       registerDefaultDeleteItemsAction: true
     });
@@ -33,7 +37,7 @@ export class ConceptCanvasEngine extends CanvasEngine<CanvasEngineListener, Conc
     this.getLayerFactories().registerFactory(new ImageLayerFactory());
     this.getLayerFactories().registerFactory(new ControlsLayerFactory());
 
-    this.getStateMachine().pushState(new DefaultCanvasState());
+    this.getStateMachine().pushState(new DefaultCanvasState(options));
 
     this.getActionEventBus()
       .getActionsForType(InputType.MOUSE_WHEEL)

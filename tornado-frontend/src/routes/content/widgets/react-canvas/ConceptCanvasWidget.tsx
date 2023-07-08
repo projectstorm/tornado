@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import * as _ from 'lodash';
 import { Action, CanvasWidget, InputType } from '@projectstorm/react-canvas-core';
@@ -18,8 +18,13 @@ export interface ConceptCanvasWidgetProps {
 
 export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer((props) => {
   const system = useSystem();
+  const [locked, setLocked] = useState(true);
+  const ref = useRef<boolean>();
+  ref.current = locked;
   const [engine] = useState(() => {
-    return new ConceptCanvasEngine();
+    return new ConceptCanvasEngine({
+      isLocked: () => ref.current
+    });
   });
   const [position, setPosition] = useState<React.MouseEvent>(null);
   const [ready, setReady] = useState(false);
@@ -87,6 +92,8 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
   // paste handler
   usePasteMedia({
     gotMedia: (files) => {
+      setLocked(false);
+
       files.forEach(async (file) => {
         const media = await system.clientMedia.uploadMedia(file);
         const element = engine.getModel().addImage();
@@ -113,6 +120,13 @@ export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer(
     <S.Parent>
       <S.Container engine={engine} />
       <S.Controls>
+        <S.Button
+          type={ButtonType.DISCRETE}
+          icon={locked ? 'lock' : 'lock-open'}
+          action={async () => {
+            setLocked(!locked);
+          }}
+        />
         <S.Button
           type={ButtonType.DISCRETE}
           icon="magnifying-glass-minus"

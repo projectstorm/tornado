@@ -11,6 +11,7 @@ import { observer } from 'mobx-react';
 import { TableRowActionsWidget } from '../../widgets/table/TableRowActionsWidget';
 import { ConceptBoardModel } from '../../stores/ConceptsStore';
 import { RelativeDateCellWidget } from '../../widgets/table/RelativeDateCellWidget';
+import { useTitle } from '../../hooks/useTitle';
 
 export interface ConceptBoardRow extends TableRow {
   board: ConceptBoardModel;
@@ -22,8 +23,10 @@ export const ConceptBoardsPage: React.FC = observer((props) => {
   const system = useSystem();
   useEffect(() => {
     system.conceptStore.loadConcepts();
-    system.updateTitle('Concepts');
   }, []);
+  useTitle(() => {
+    return 'Concepts';
+  });
   return (
     <S.Container>
       <S.Buttons>
