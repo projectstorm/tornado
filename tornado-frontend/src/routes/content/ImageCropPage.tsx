@@ -8,7 +8,7 @@ import Cropper, { ReactCropperElement } from 'react-cropper';
 import { MediaSize } from '@projectstorm/tornado-common';
 import 'cropperjs/dist/cropper.css';
 import { ButtonType, ButtonWidget } from '../../widgets/forms/ButtonWidget';
-import { Routing } from '../routes';
+import { Routing, RoutingState } from '../routes';
 import * as _ from 'lodash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '../../theme/theme';
@@ -102,7 +102,11 @@ export const ImageCropPage: React.FC = observer((props) => {
               }
             });
             await concept.setCanvasData(concept.data);
-            navigate(generatePath(Routing.CONCEPTS_BOARD, { board: board }));
+            navigate(generatePath(Routing.CONCEPTS_BOARD, { board: board }), {
+              state: {
+                cropped: true
+              } as RoutingState[Routing.CONCEPTS_BOARD]
+            });
           }}
         />
       </S.Buttons>

@@ -4,3 +4,9 @@ export enum Routing {
   CONCEPTS_BOARD = '/concepts/:board',
   CONCEPTS_BOARD_IMAGE_CROP = '/concepts/:board/image/:image'
 }
+
+export interface RoutingState {
+  [Routing.CONCEPTS_BOARD]: {
+    cropped: boolean;
+  };
+}

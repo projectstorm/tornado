@@ -11,6 +11,8 @@ import { useSystem } from '../../../../hooks/useSystem';
 import { ImageElement } from './image-element/ImageElementFactory';
 import { ButtonType, ButtonWidget } from '../../../../widgets/forms/ButtonWidget';
 import { observer } from 'mobx-react';
+import { useLocation } from 'react-router-dom';
+import { Routing, RoutingState } from '../../../routes';
 
 export interface ConceptCanvasWidgetProps {
   board: ConceptBoardModel;
@@ -18,7 +20,11 @@ export interface ConceptCanvasWidgetProps {
 
 export const ConceptCanvasWidget: React.FC<ConceptCanvasWidgetProps> = observer((props) => {
   const system = useSystem();
-  const [locked, setLocked] = useState(true);
+  const location = useLocation();
+  const [locked, setLocked] = useState(() => {
+    const state = location.state as RoutingState[Routing.CONCEPTS_BOARD];
+    return !state?.cropped;
+  });
   const ref = useRef<boolean>();
   ref.current = locked;
   const [engine] = useState(() => {
